@@ -1,0 +1,5 @@
+# object files and library files
+*.[oa]
+
+# tmp files created by editors
+*~
