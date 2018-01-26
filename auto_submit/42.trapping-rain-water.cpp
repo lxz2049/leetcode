@@ -29,35 +29,29 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-		// create a copy of height
-		int size = height.size();
-		vector<int>water(height);
+		int lmax = 0, rmax = 0;
+		int i = 0, j = height.size()-1;
+		int ans = 0;
 
-		// store lmax
-		int lmax=0;
-		for (int i=0; i<size-1; ++i) {
-			if (height[i] > lmax)
-				lmax = height[i];
-			water[i] = lmax;
-		}
+		while (i <= j) {
+			// update lmax and rmax
+			lmax = max(lmax, height[i]);
+			rmax = max(rmax, height[j]);
 
-		// store rmax
-		int rmax = 0;
-		for (int i=size-1; i>0; --i) {
-			if (height[i] > rmax)
-				rmax = height[i];
-			water[i] = min(rmax, water[i]);
+			// for position i, lmax is fixed while rmax can still be higher
+			// so if lmax < rmax we can safely conclude max=lmax
+			if (lmax < rmax) {
+				ans += lmax - height[i++];
+				//printf("l<r:%d\n", ans);
+			}
+			// vice-versa for position j
+			else {
+				ans += rmax - height[j--];
+				//printf("l>r:%d\n", ans);
+			}
 		}
-
-		// get result
-		int ans=0;
-		for (int i=0; i<size; ++i) {
-			//printf("%d ", water[i]);
-			ans += water[i] - height[i];
-		}
-		//printf("\n");
 
 		return ans;
-    }
+	}
 };
 
