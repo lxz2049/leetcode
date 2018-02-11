@@ -44,7 +44,7 @@ public:
 				start = i;
 				end = j;
 				jumps ++;
-				printf("start:%d end:%d jumps:%d\n", start, end, jumps);
+				//printf("start:%d end:%d jumps:%d\n", start, end, jumps);
 			}
 			while (j<min(size, i+nums[i]+1)) {
 				j++;
