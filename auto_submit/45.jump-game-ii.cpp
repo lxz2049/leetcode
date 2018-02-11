@@ -38,21 +38,22 @@ class Solution {
 public:
     int jump(vector<int>& nums) {
 		int size = nums.size();
-		vector<int> ans(size);
+		int start = 0, end = 1, jumps = 0;
  		for (int i=0, j=1; i<size, j<size; ++i) {
+			if (i>=end) {
+				start = i;
+				end = j;
+				jumps ++;
+				printf("start:%d end:%d jumps:%d\n", start, end, jumps);
+			}
 			while (j<min(size, i+nums[i]+1)) {
-				ans[j] = ans[i]+1;
 				j++;
 			}
 		}
 
-		/*
- 		for (int i=0; i<size; ++i) {
-			printf("%d ", ans[i]);
-		}
-		printf("\n");
-		*/
-		return ans[size-1];
+		if (size > end)
+			jumps++;
+		return jumps;
     }
 
 	bool test() {
