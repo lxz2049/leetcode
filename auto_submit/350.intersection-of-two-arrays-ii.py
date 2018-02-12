@@ -44,14 +44,10 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        c = Counter(nums2)
-        ans = []
-        for n in nums1:
-            if c[n] > 0:
-                c[n] -= 1
-                ans.append(n)
-        return ans
+        c1 = Counter(nums1)
+        c2 = Counter(nums2)
+        return list((c1 & c2).elements())
 
-    def test(self):
-        print self.intersect([1, 2 ,2 ,1], [2, 2])
+if __name__ == '__main__':
+    print Solution().intersect([1, 2 ,2 ,1], [2, 2])
             
