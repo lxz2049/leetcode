@@ -76,31 +76,38 @@ public:
 		}
 		*/
 
-		// dfs
- 		vector<int> visited(numCourses);
- 		vector<int> topoOrder;
+		// cal indegree
+		vector<int> inDeg(numCourses);
 		for (int i=0; i<numCourses; ++i) {
-			if (!visited[i] && !dfs(g, visited, topoOrder, i)) {
-				return vector<int>();
+			for (int j=0; j<g[i].size(); ++j) {
+				inDeg[g[i][j]] ++;
 			}
 		}
-		reverse(topoOrder.begin(), topoOrder.end());
+
+		// kahn's algo
+ 		vector<int> topoOrder;
+ 		queue<int> q;
+		for (int i=0; i<numCourses; ++i) {
+			if (inDeg[i] == 0) {
+				q.push(i);
+			}
+		}
+		while (!q.empty()) {
+			int n = q.front();	q.pop();
+			//printf("n: %d\n", n);
+			topoOrder.push_back(n);
+			for (int i=0; i<g[n].size(); ++i) {
+				int pre = g[n][i];
+				//printf("pre: %d\n", pre);
+				if (--inDeg[pre] == 0) {
+					q.push(pre);
+				}
+			}
+		}
+		if (topoOrder.size() < numCourses)
+			return vector<int>();
 		return topoOrder;
     }
-
-	bool dfs(vector<vector<int> > &g, vector<int> &visited, vector<int> &topoOrder, int n) {
-		visited[n] = 1;
-		for (int i=0; i<g[n].size(); ++i) {
-			int pre = g[n][i];
-			if (visited[pre] == 1 || !visited[pre] && !dfs(g, visited, topoOrder, pre)) {	// loop detected
-				return false;
-			}
-		}
-		visited[n] = 2;
-		//printf("%d\n", n);
-		topoOrder.push_back(n);
-		return true;
-	}
 
 	bool test() {
 		vector<pair<int, int> > pre;	
