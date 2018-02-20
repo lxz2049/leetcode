@@ -33,22 +33,16 @@ class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         int size = nums.size();
-        vector<int> LISlen(size, 1);
-        for (int i=size-1; i>=0; --i) {
-            //printf("\nnums[i]:%d\n", nums[i]);
-            for (int j=i+1; j<size; ++j) {
-                if (nums[j] > nums[i]) {
-                    //printf("nums[j]:%d LISlen[j]:%d\n", nums[j], LISlen[j]);
-                    LISlen[i] = max(LISlen[i], LISlen[j] + 1);
-                }
-            }
-        }
-        int ans = 0;
-        for (int i=0; i<size; ++i) {
-            //printf("nums[i]:%d LISlen[i]:%d\n", nums[i], LISlen[i]);
-            ans = max(ans, LISlen[i]);
-        }
-        return ans;
+        vector<int> listLen;
+		for (int i=0; i<size; ++i) {
+			vector<int>::iterator j = lower_bound(listLen.begin(), listLen.end(), nums[i]);
+			if (j == listLen.end()) {
+				listLen.push_back(nums[i]);
+			} else {
+				*j = nums[i];
+			}
+		}
+        return listLen.size();
     }
 
     bool test() {
@@ -58,3 +52,4 @@ public:
         return lengthOfLIS(v) == 4;
     }
 };
+
