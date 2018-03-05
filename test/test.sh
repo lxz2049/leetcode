@@ -7,7 +7,7 @@ iconv -f utf-8 -t ascii//TRANSLIT < $1 > $TMPDIR/$1
 if [[ $TMPDIR/$1 =~ \.cpp$ ]]
 then
     g++ --include leetcode.h --include $TMPDIR/$1 test.cpp -o $TMPDIR/_test
-    TMPDIR/_test
+    $TMPDIR/_test
 fi
 if [[ $TMPDIR/$1 =~ \.py$ ]]
 then
