@@ -33,8 +33,12 @@ class Solution(object):
         :rtype: int
         """
         it = iter(nums)
-        smax = lmax = it.next()
-        for n in it:
-            lmax = max(n, n+lmax)
-            smax = max(smax, lmax)
-        return smax
+        ans = rmax = next(it)
+        for i in it:
+            rmax = max(rmax+i, i)
+            ans = max(rmax, ans)
+        return ans
+
+
+    def test(self):
+        print self.maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4])
