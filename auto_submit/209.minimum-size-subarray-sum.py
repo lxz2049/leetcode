@@ -41,11 +41,10 @@ class Solution(object):
         l = 0
         for i in range(0, len(nums)):
             sumlr += nums[i]
-            while sumlr-nums[l] >= s and l<i:
+            while sumlr >= s:
+                ans = min(ans, i-l+1) if ans > 0 else i-l+1
                 sumlr -= nums[l]
                 l += 1
-            if sumlr >= s:
-                ans = min(ans, i-l+1) if ans > 0 else i-l+1
         return ans
 
     def test(self):
