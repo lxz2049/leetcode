@@ -54,6 +54,7 @@ class Solution(object):
         def mod(a, b):
             return a%b if b != 0 else a
 
+        nums.insert(0, 0)
         asum = 0
         presum = None
         sumset = set()
@@ -62,11 +63,11 @@ class Solution(object):
             if mod(asum, k) in sumset:
                 #print sumset, True
                 return True
-            if presum:
+            if presum is not None:
                 sumset.add(presum)
             presum = mod(asum, k)
         #print sumset, False
-        return (mod(asum, k) == 0 and len(nums) > 1) or False
+        return False
 
 
     def test(self):
