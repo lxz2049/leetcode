@@ -41,13 +41,12 @@ class Solution(object):
         ans = 0
         prod = 1
         for i in range(0, len(nums)):
-            #print nums[i], prod*nums[i]
             prod *= nums[i]
-            while l < len(nums) and prod >= k:
+            while l < len(nums) and prod  >= k:
                 prod /= nums[l]
                 l += 1
+            #prod *= nums[i]
             ans += max(0, i-l + 1)
-            #print  nums[l:i+1]
         return ans
 
     def test(self):
