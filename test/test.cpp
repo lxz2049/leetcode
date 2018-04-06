@@ -7,10 +7,6 @@ using namespace std;
 
 int main() {
 	Solution s;
-	if (s.test())
-		cout<<"AC"<<endl;
-	else
-		cout<<"WRONG ANSWER"<<endl;
-	
+    s.test();
 	return 0;
 }
