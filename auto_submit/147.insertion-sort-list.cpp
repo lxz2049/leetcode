@@ -28,11 +28,9 @@ public:
 			ListNode* it = head;
 			ListNode* prev_it = NULL;
 			while (it != end && it->val < end->val) {
-				//printf("1 it:%d end:%d\n", it->val, end->val);
 				prev_it = it;
 				it = it->next;
 			}
-			printf("2 it:%d end:%d\n", it, end);
 			if (it != end) {
 				prev_end->next = end->next;
 				if (prev_it)
