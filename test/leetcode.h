@@ -20,7 +20,25 @@ struct ListNode {
 	int val;
 	ListNode* next;
 	ListNode(int x): val(x), next(NULL) {}
+    void print() {
+        ListNode* node = next;
+        while (node) {
+            printf("%d ", node->val);
+            node = node->next;
+        }
+        printf("\n");
+    }
 };
+
+ListNode* arr2list(int x[], int len) {
+    ListNode* head = new ListNode(x[0]);
+    ListNode* node = head;
+    for (int i=0; i<len; ++i) {
+        node = node->next = new ListNode(x[i]);
+    }
+    return head;
+}
+
 
 struct Interval {
     int start;
