@@ -47,15 +47,5 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
-        l = []
-        for i in range(n):
-            i += 1
-            fizzbuzz = ""
-            if i % 3 == 0:
-                fizzbuzz += "Fizz"
-            if i % 5 == 0:
-                fizzbuzz += "Buzz"
-            if not fizzbuzz:
-                fizzbuzz = str(i)
-            l.append(fizzbuzz)
-        return l
+        return ["".join(("Fizz" if i%3==0 else "", "Buzz" if i%5==0 else "", str(i) if i%3 and i%5 else ""))
+                for i in range(1, n+1)]
