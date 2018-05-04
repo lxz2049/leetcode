@@ -44,8 +44,8 @@
 # 
 #
 class Solution(object):
-    def repeatedSubstringPattern(self, s):
-        """
+    def repeatedSubstringPattern_slow(self, s):
+        """Quadratic time solution
         :type s: str
         :rtype: bool
         """
@@ -55,6 +55,13 @@ class Solution(object):
                 if s[:i] * (len(s) / len(s[:i])) == s:
                     return True
         return False
+
+    def repeatedSubstringPattern(self, s):
+        """Linear time solution
+        :type s: str
+        :rtype: bool
+        """
+        return (s+s).find(s, 1) != len(s)
 
     def test(self):
         print self.repeatedSubstringPattern("abab")
