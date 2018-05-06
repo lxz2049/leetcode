@@ -40,6 +40,7 @@ class NumArray(object):
             for x in l:
                 total += x
                 yield total
+            yield 0
         self.sums = list(accumu(nums))
         
 
@@ -49,11 +50,9 @@ class NumArray(object):
         :type j: int
         :rtype: int
         """
-        #print i, j, self.sums
         j = min(len(self.sums)-1, j)
-        if i > 0:
-            return self.sums[j] - self.sums[i-1]
-        return self.sums[j]
+        #print i, j, self.sums
+        return self.sums[j] - self.sums[i-1]
 
 
 class Solution:
