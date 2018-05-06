@@ -4,7 +4,7 @@
 # https://leetcode.com/problems/range-sum-query-2d-immutable/description/
 #
 # algorithms
-# Medium (27.14%)
+# Medium (27.18%)
 # Total Accepted:    44.3K
 # Total Submissions: 161.3K
 # Testcase Example:  '["NumMatrix","sumRegion","sumRegion","sumRegion"]\n[[[[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]]],[2,1,4,3],[1,1,2,2],[1,2,2,4]]'
@@ -17,22 +17,6 @@
 # 
 # The above rectangle (with the red border) is defined by (row1, col1) = (2, 1)
 # and (row2, col2) = (4, 3), which contains sum = 8.
-# 
-# 
-# Example:
-# 
-# Given matrix = [
-# ⁠ [3, 0, 1, 4, 2],
-# ⁠ [5, 6, 3, 2, 1],
-# ⁠ [1, 2, 0, 1, 5],
-# ⁠ [4, 1, 0, 1, 7],
-# ⁠ [1, 0, 3, 0, 5]
-# ]
-# 
-# sumRegion(2, 1, 4, 3) -> 8
-# sumRegion(1, 1, 2, 2) -> 11
-# sumRegion(1, 2, 2, 4) -> 12
-# 
 # 
 # 
 # Note:
@@ -49,13 +33,16 @@ class NumMatrix(object):
         """
         :type matrix: List[List[int]]
         """
-        def accumu(l):
-            total = 0
-            for x in l:
-                total += x
-                yield total
-            yield 0
-        self.sums = [list(accumu(row)) for row in matrix]
+        for i in range(0, len(matrix)):
+            for j in range(0, len(matrix[0])):
+                if i > 0:
+                    matrix[i][j] += matrix[i-1][j]
+                if j > 0:
+                    matrix[i][j] += matrix[i][j-1]
+                if i > 0 and j > 0:
+                    matrix[i][j] -= matrix[i-1][j-1]
+
+        self.matrix = matrix
         
 
     def sumRegion(self, row1, col1, row2, col2):
@@ -66,20 +53,17 @@ class NumMatrix(object):
         :type col2: int
         :rtype: int
         """
-        ans = 0
-        for r in range(row1, row2+1):
-            ans += self.sums[r][col2] - self.sums[r][col1-1]
-        return ans
+        s = self.matrix[row2][col2]
+        s -= self.matrix[row1-1][col2] if row1 > 0 else 0
+        s -= self.matrix[row2][col1-1] if col1 > 0 else 0
+        s += self.matrix[row1-1][col1-1] if row1 > 0 and col1 > 0 else 0
+        return s
+        
 
 class Solution:
     def test(self):
         m = NumMatrix([[3, 0, 1, 4, 2], [5, 6, 3, 2, 1], [1, 2, 0, 1, 5], [4, 1, 0, 1, 7], [1, 0, 3, 0, 5]])
-        print m.sumRegion(2, 1, 4, 3)
-        print m.sumRegion(1, 1, 2, 2)
-        print m.sumRegion(1, 2, 2, 4)
-        
+        print 8, m.sumRegion(2, 1, 4, 3) 
+        print 11, m.sumRegion(1, 1, 2, 2)
+        print 12, m.sumRegion(1, 2, 2, 4)
 
-
-# Your NumMatrix object will be instantiated and called as such:
-# obj = NumMatrix(matrix)
-# param_1 = obj.sumRegion(row1,col1,row2,col2)
