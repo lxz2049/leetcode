@@ -35,7 +35,12 @@ class NumArray(object):
         """
         :type nums: List[int]
         """
-        self.nums = nums
+        def accumu(l):
+            total = 0
+            for x in l:
+                total += x
+                yield total
+        self.sums = list(accumu(nums))
         
 
     def sumRange(self, i, j):
@@ -44,7 +49,12 @@ class NumArray(object):
         :type j: int
         :rtype: int
         """
-        return sum(self.nums[i:j+1])
+        #print i, j, self.sums
+        j = min(len(self.sums)-1, j)
+        if i > 0:
+            return self.sums[j] - self.sums[i-1]
+        return self.sums[j]
+
 
 class Solution:
     def test(self):
