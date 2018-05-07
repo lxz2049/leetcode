@@ -33,16 +33,13 @@ class NumMatrix(object):
         """
         :type matrix: List[List[int]]
         """
+        if not matrix:
+            self.matrix = None
+            return
+        self.matrix = [[0]*(len(matrix[0]) + 1) for i in range(len(matrix) + 1)]
         for i in range(0, len(matrix)):
             for j in range(0, len(matrix[0])):
-                if i > 0:
-                    matrix[i][j] += matrix[i-1][j]
-                if j > 0:
-                    matrix[i][j] += matrix[i][j-1]
-                if i > 0 and j > 0:
-                    matrix[i][j] -= matrix[i-1][j-1]
-
-        self.matrix = matrix
+                self.matrix[i+1][j+1] = matrix[i][j] + self.matrix[i][j+1] + self.matrix[i+1][j] - self.matrix[i][j]
         
 
     def sumRegion(self, row1, col1, row2, col2):
@@ -53,10 +50,12 @@ class NumMatrix(object):
         :type col2: int
         :rtype: int
         """
-        s = self.matrix[row2][col2]
-        s -= self.matrix[row1-1][col2] if row1 > 0 else 0
-        s -= self.matrix[row2][col1-1] if col1 > 0 else 0
-        s += self.matrix[row1-1][col1-1] if row1 > 0 and col1 > 0 else 0
+        if not self.matrix:
+            return 0
+        s = self.matrix[row2+1][col2+1]
+        s -= self.matrix[row1][col2+1] 
+        s -= self.matrix[row2+1][col1]
+        s += self.matrix[row1][col1]
         return s
         
 
