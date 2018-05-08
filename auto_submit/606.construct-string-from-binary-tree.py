@@ -66,9 +66,8 @@ class Solution(object):
                 l = traverse(node.left)
                 r = traverse(node.right)
                 if r:
-                    l = '(%s)' % l
                     r = '(%s)' % r
-                elif l:
+                if r or l:
                     l = '(%s)' % l
                 return '%s%s%s' % (node.val, l, r)
             return ''
