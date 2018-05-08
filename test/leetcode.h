@@ -17,7 +17,7 @@ struct TreeNode {
 };
 
 TreeNode* arr2treeUtil(int x[], int i, int len) {
-    if (i >= len)   return NULL;
+    if (i >= len || x[i] == -1)   return NULL;
     TreeNode* node = new TreeNode(x[i]);
     node->left = arr2treeUtil(x, i*2+1, len);
     node->right = arr2treeUtil(x, i*2+2, len);
