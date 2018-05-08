@@ -92,12 +92,12 @@ public:
 
         int nodecnt_left_current = 0, nodecnt_right_current = 0;
         if (node->left && node->left->val == node->val)
-            nodecnt_left_current += nodecnt_left + 1;
+            nodecnt_left_current += nodecnt_left;
         if (node->right && node->right->val == node->val)
-            nodecnt_right_current += nodecnt_right + 1;
+            nodecnt_right_current += nodecnt_right;
 
         ans = max(ans, nodecnt_left_current+nodecnt_right_current);
-        return max(nodecnt_left_current, nodecnt_right_current);
+        return max(nodecnt_left_current, nodecnt_right_current)+1;
     }
 
     void test() {
