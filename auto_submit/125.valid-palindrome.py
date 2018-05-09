@@ -36,11 +36,18 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        s = "".join(str(c) for c in (c.lower() for c in s if c.lower() in "0123456789abcdefghijklmnopqrstuvwxyz"))
-        #print s
-        for i in range(0, len(s)/2):
-            if s[i] != s[len(s)-1-i]:
+        l = 0
+        r = len(s)-1
+        while l <= r:
+            if not s[l].isalnum():
+                l += 1
+            elif not s[r].isalnum():
+                r -= 1
+            elif s[l].lower() != s[r].lower():
                 return False
+            else:
+                l += 1
+                r -= 1
         return True
 
     def test(self):
