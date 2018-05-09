@@ -36,17 +36,13 @@ class Solution(object):
         :rtype: str
         """
         carry = abs(num)
-        num_base7 = ""
+        pre = "" if num > 0 else "0" if num == 0 else "-"
+        num_base7 = []
         while carry:
-            num_base7 += str(carry%7)
+            num_base7.append(carry%7)
             carry /= 7
             
-        num_base7 = num_base7[::-1]
-        if num < 0:
-            num_base7 = "-%s" % num_base7
-        elif num == 0:
-            num_base7 = "0"
-        return num_base7
+        return pre + "".join(str(c) for c in reversed(num_base7))
 
     def test(self):
         print self.convertToBase7(100)
