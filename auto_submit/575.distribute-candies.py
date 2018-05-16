@@ -52,10 +52,7 @@ class Solution(object):
         :type candies: List[int]
         :rtype: int
         """
-        d = set()
-        ret = 0
-        for candy in candies:
-            if candy not in d:
-                ret += 1
-                d.add(candy)
-        return min(len(candies)/2, ret)
+        return min(len(candies)/2, len(set(candies)))
+
+    def test(self):
+        print self.distributeCandies([1,1,2,3])
