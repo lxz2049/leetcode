@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/minimum-time-difference/description/
 #
 # algorithms
-# Medium (46.01%)
-# Total Accepted:    15.9K
-# Total Submissions: 34.5K
+# Medium (46.04%)
+# Total Accepted:    18.4K
+# Total Submissions: 39.9K
 # Testcase Example:  '["23:59","00:00"]'
 #
 # Given a list of 24-hour clock time points in "Hour:Minutes" format, find the
@@ -33,19 +33,15 @@ class Solution(object):
         :type timePoints: List[str]
         :rtype: int
         """
-        def getMin(t):
-            h, m = t.split(':')
-            return int(h) * 60 + int(m)
-        
-        timePoints.sort(key=getMin)
-        ans = getMin(timePoints[0]) + 24*60 - getMin(timePoints[-1])
-        for i in range(0, len(timePoints)-1):
-            ans = min(ans, getMin(timePoints[i+1]) - getMin(timePoints[i]))
-            
+        def getSeconds(s):
+            h, m = s.split(":")
+            return int(h)*60 + int(m)
+        timePointsSeconds = sorted([getSeconds(t) for t in timePoints])
+        ans = timePointsSeconds[0] - timePointsSeconds[-1] + (24*60)
+        for i in range(len(timePointsSeconds)-1):
+            ans = min(timePointsSeconds[i+1] - timePointsSeconds[i], ans)
         return ans
 
     def test(self):
-        print self.findMinDifference(["23:59", "00:00"])
+        print self.findMinDifference(["23:50", "14:00", "14:01", "00:00"])
 
-
-            
