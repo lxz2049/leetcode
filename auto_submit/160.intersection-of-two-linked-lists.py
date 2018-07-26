@@ -47,32 +47,40 @@ class Solution(object):
         :type head1, head1: ListNode
         :rtype: ListNode
         """
+        if headA == headB:
+            return headA
+
         # find length a
         nodeA = headA
+        prevA = None
         lenA = 0
         while nodeA:
+            prevA = nodeA
             nodeA = nodeA.next
             lenA += 1
 
         # find length b
         nodeB = headB
+        prevB = None
         lenB = 0
         while nodeB:
+            prevB = nodeB
             nodeB = nodeB.next
             lenB += 1
 
-        # lenA > lenB
-        if lenA < lenB:
-            headA, headB = headB, headA
-        
-        # move A forward
-        for _ in range(abs(lenA-lenB)):
-            headA = headA.next
+        if prevA == prevB:
+            # lenA > lenB
+            if lenA < lenB:
+                headA, headB = headB, headA
+            
+            # move A forward
+            for _ in range(abs(lenA-lenB)):
+                headA = headA.next
 
-        # find intersection
-        while headA and headB:
-            if headA == headB:
-                return headA
-            headA = headA.next
-            headB = headB.next
+            # find intersection
+            while headA and headB:
+                if headA == headB:
+                    return headA
+                headA = headA.next
+                headB = headB.next
         return None
