@@ -37,18 +37,18 @@ class Solution(object):
         :type k: int
         :rtype: float
         """
-        max_avg = -10000
-        cur_avg = 0.0
+        max_sum = -10000*k
+        cur_sum = 0.0
         for i, n in enumerate(nums):
             if i >= k:
-                cur_avg = cur_avg - float(nums[i-k])/k + float(n)/k
-                max_avg = max(cur_avg, max_avg)
+                cur_sum = cur_sum - nums[i-k] + n
+                max_sum = max(cur_sum, max_sum)
             else:
-                cur_avg += float(n)/k
+                cur_sum += n
                 if i == k-1:
-                    max_avg = max(cur_avg, max_avg)
-            #print cur_avg
-        return max_avg
+                    max_sum = max(cur_sum, max_sum)
+            #print cur_sum
+        return float(max_sum)/k
 
     def test(self):
         print self.findMaxAverage([1,12,-5,-6,50,3], 4)
