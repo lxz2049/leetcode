@@ -32,7 +32,8 @@ class Solution(object):
         """
         fast = slow = head
         try:
-            fast = fast.next
+            fast = fast.next.next
+            slow = slow.next
             while fast != slow:
                 fast = fast.next.next
                 slow = slow.next
