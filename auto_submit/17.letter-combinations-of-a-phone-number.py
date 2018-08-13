@@ -30,7 +30,6 @@
 # in any order you want.
 # 
 #
-import itertools
 class Solution(object):
     def letterCombinations(self, digits):
         """
@@ -40,7 +39,12 @@ class Solution(object):
         if not digits:
             return []
         d = {"2": "abc", "3": "def", "4": "ghi", "5": "jlk", "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz"}
-        return ["".join(t) for t in itertools.product(*(d[c] for c in digits))]
+        ret = [[]]
+        for c in digits:
+            pool = d[c]
+            ret = [r+[e] for e in pool for r in ret]
+
+        return ["".join(r) for r in ret]
 
     def test(self):
         print self.letterCombinations("23")
