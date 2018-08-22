@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/student-attendance-record-i/description/
 #
 # algorithms
-# Easy (44.55%)
-# Total Accepted:    37.6K
-# Total Submissions: 83.8K
+# Easy (44.69%)
+# Total Accepted:    38.1K
+# Total Submissions: 84.8K
 # Testcase Example:  '"PPALLP"'
 #
 # You are given a string representing an attendance record for a student. The
@@ -50,16 +50,16 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        acnt = 0
-        lstreak = 0
-        lstreak_max = 0
-        for e in s:
-            if e == "L":
-                lstreak += 1
-                lstreak_max = max(lstreak_max, lstreak)
+        absent_count = 0
+        continuous_late_count = 0
+        for record in s:
+            if record == 'A':
+                absent_count += 1
+            if record == 'L':
+                continuous_late_count += 1
             else:
-                lstreak = 0
-            if e == "A":
-                acnt += 1
+                continuous_late_count = 0
+            if absent_count > 1 or continuous_late_count > 2:
+                return False
+        return True
                 
-        return acnt <= 1 and lstreak_max <= 2
