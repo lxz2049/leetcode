@@ -36,11 +36,10 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        def quickselect(left, right):
-            if left > right:
-                return
-
-            #print nums[left:right+1]
+        k -= 1
+        left = 0
+        right = len(nums)-1
+        while left <= right:
             pivot = left
             nums[right], nums[pivot] = nums[pivot], nums[right]
             left_boundary = left
@@ -51,15 +50,12 @@ class Solution(object):
                 if left_boundary >= right:
                     break
             nums[left_boundary], nums[right] = nums[right], nums[left_boundary]
-            #print nums[left:right+1], left_boundary, k
             if left_boundary == k:
                 return nums[left_boundary]
             if left_boundary < k:
-                return quickselect(left_boundary+1, right)
-            return quickselect(left, left_boundary-1)
-
-        k -= 1
-        return quickselect(0, len(nums)-1)
+                left = left_boundary+1
+            else:
+                right = left_boundary-1
 
     def test(self):
         print self.findKthLargest([3,2,1,5,6,4], 2)
