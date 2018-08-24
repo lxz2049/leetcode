@@ -48,13 +48,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        d = collections.defaultdict(list)
+        ret = []
         def traverse(node, level):
             if not node:
                 return
+            if level >= len(ret):
+                ret.append([node.val])
+            else:
+                ret[level].append(node.val)
             traverse(node.left, level+1)
-            d[level].append(node.val)
             traverse(node.right, level+1)
         traverse(root, 0)
             
-        return d.values()
+        return ret
