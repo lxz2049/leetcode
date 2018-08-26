@@ -46,14 +46,19 @@ class Solution(object):
         :rtype: bool
         """
         cnt = 0
-        nums_clone = list(reversed(nums))
         for i in xrange(len(nums)-1):
             if nums[i] > nums[i+1]:
-                nums[i+1] = nums[i]
+                if i > 0 and nums[i-1] <= nums[i+1] or i == 0:
+                    nums[i] = nums[i-1]
+                elif i < len(nums) - 2 and nums[i] <= nums[i+2] or i == len(nums) - 2:
+                    nums[i+1] = nums[i]
+                else:
+                    return False
                 cnt += 1
-        cnt_clone = 0
-        for i in xrange(len(nums_clone)-1):
-            if nums_clone[i] < nums_clone[i+1]:
-                nums_clone[i+1] = nums_clone[i]
-                cnt_clone += 1
-        return cnt <= 1 or cnt_clone <= 1
+                if cnt > 1:
+                    return False
+        return True
+
+    def test(self):
+        print self.checkPossibility([1,2,4,5,3])
+        print self.checkPossibility([3,2,4,3])
