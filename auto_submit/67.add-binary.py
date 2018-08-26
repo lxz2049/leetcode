@@ -34,26 +34,4 @@ class Solution(object):
         :type b: str
         :rtype: str
         """
-        ans = []
-        carry = "0"
-        for t in itertools.izip_longest(reversed(a), reversed(b), fillvalue="0"):
-            if t[0] == "1" and t[1] == "1":
-                ans.append(carry)
-                carry = "1"
-            elif t[0] == "1" or t[1] == "1":
-                if carry == "1":
-                    ans.append("0")
-                    carry = "1"
-                else:
-                    ans.append("1")
-                    carry = "0"
-            else:
-                ans.append(carry)
-                carry = "0"
-        if carry == "1":
-            ans.append(carry)
-        return "".join(reversed(ans))
-
-
-            
-            
+        return bin(int(a, 2) + int(b, 2))[2:]
