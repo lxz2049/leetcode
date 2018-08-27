@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/valid-parenthesis-string/description/
 #
 # algorithms
-# Medium (29.64%)
+# Medium (29.42%)
 # Total Accepted:    14.3K
-# Total Submissions: 47.9K
+# Total Submissions: 48K
 # Testcase Example:  '"()"'
 #
 # 
@@ -56,36 +56,41 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        dp = []
-        stars = []
-        for i, c in enumerate(s):
-            if c == "*":
-                stars.append((c, i))
-            elif dp and dp[-1][0] == "(" and c == ")":
-                dp.pop()
-            else:
-                dp.append((c, i))
-        #print dp, stars
-        new_dp = []
-        i = j = 0
-        while i < len(dp) or j < len(stars):
-            if i < len(dp) and (j >= len(stars) or dp[i][1] < stars[j][1]):
-                cur = dp[i][0]
-                i += 1
-            elif j < len(stars):
-                cur = "*"
-                j += 1
-            if new_dp and (new_dp[-1] == "(" and cur == "*" or new_dp[-1] == "*" and cur == ")"):
-                new_dp.pop()
-            else:
-                new_dp.append(cur)
-
-            #print new_dp
-        return ")" not in new_dp and "(" not in new_dp
-            
+        score = 0
+        star = 0
+        for c in s:
+            if c == "(":
+                score += 1
+            elif c == ")":
+                if not score and star:
+                    star -= 1
+                else:
+                    score -= 1
+            else:        
+                star += 1
+            if score < 0:
+                return False
+            #print c, score, star
+                
+        score = 0
+        star = 0
+        for c in reversed(s):
+            if c == ")":
+                score += 1
+            elif c == "(":
+                if not score and star:
+                    star -= 1
+                else:
+                    score -= 1
+            else:        
+                star += 1
+            if score < 0:
+                return False
+            #print c, score, star
+        return True
 
     def test(self):
-        print self.checkValidString("()")
-        print self.checkValidString("(*))")
+        print self.checkValidString("((*")
+        print self.checkValidString("((*)(*))((*")
         print self.checkValidString("(())((())()()(*)(*()(())())())()()((()())((()))(*")
-            
+        
