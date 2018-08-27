@@ -84,7 +84,7 @@ class Solution(object):
             if not node:
                 return False
             #print "traverse", node.val
-            match = isSubtreeRecursive(node, t) or isSubtreeRecursive(node.left, t) or isSubtreeRecursive(node.right, t)
+            match = isSubtreeRecursive(node, t)
             if match:
                 return True
             return traverse(node.left) or traverse(node.right)
