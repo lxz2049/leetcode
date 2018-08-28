@@ -97,7 +97,7 @@ class Solution(object):
                 elif 26 >= int(s[i-1:i+1]) >= 10:
                     cur, prev = prev, cur
                 else:
-                    return 0
+                    cur, prev = 0, cur
             #print s[i-1], s[i]
         return cur
 	
