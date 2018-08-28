@@ -76,29 +76,29 @@ class Solution(object):
             if s[i] == "*":
                 if s[i-1] == "*":
                     cur, prev = (cur * 9 + prev * 15) % MOD, cur
-                elif int(s[i-1]) == 1:
+                elif s[i-1] == "1":
                     cur, prev = (cur * 9 + prev * 9) % MOD, cur
-                elif int(s[i-1]) == 2:
+                elif s[i-1] == "2":
                     cur, prev = (cur * 9 + prev * 6) % MOD, cur
                 else:
                     cur, prev = (cur * 9) % MOD, cur
             elif s[i-1] == '*':
-                if int(s[i]) == 0:
+                if s[i] == "0":
                     cur, prev = (prev * 2) % MOD, cur
-                elif int(s[i]) <= 6:
+                elif s[i] <= "6":
                     cur, prev = (cur + prev * 2) % MOD, cur
                 else:
                     cur, prev = (cur + prev) % MOD, cur
             else:
-                if (26 >= int(s[i-1:i+1]) >= 10) and int(s[i]) > 0:
+                double = (s[i-1] == "1" and s[i] >= "0" or s[i-1] == "2" and s[i] <= "6")
+                if double and s[i] > "0":
                     cur, prev = (prev + cur) % MOD, cur
-                elif int(s[i]) > 0:
+                elif s[i] > "0":
                     prev = cur
-                elif 26 >= int(s[i-1:i+1]) >= 10:
+                elif double:
                     cur, prev = prev, cur
                 else:
                     cur, prev = 0, cur
-            #print s[i-1], s[i]
         return cur
 	
 
@@ -113,3 +113,4 @@ class Solution(object):
         print self.numDecodings("**")
         print self.numDecodings("1*")
         print self.numDecodings("1003")
+        print self.numDecodings("*10*1")
