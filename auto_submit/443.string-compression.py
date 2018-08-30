@@ -86,24 +86,19 @@ class Solution(object):
         """
         chars.append(None)
         count = 1
-        new_i = -1
-        for i in range(len(chars)):
-            if new_i >= 0 and chars[new_i] == chars[i]:
+        j = 1
+        for i in xrange(1, len(chars)):
+            if chars[i] == chars[i-count]:
                 count += 1
             else:
                 if count > 1:
-                    while count >= 0:
-                        new_i += 1
-                        if count/10:
-                            chars[new_i] = str(count/10)
-                            count -= count/10*10
-                        else:
-                            chars[new_i] = str(count%10)
-                            count = -1
-                new_i += 1
-                chars[new_i] = chars[i]
+                    for s in str(count):
+                        chars[j] = s
+                        j += 1
+                chars[j] = chars[i]
+                j += 1
                 count = 1
-        return new_i
+        return j-1
 
     def test(self):
         l = ["a","b","b","b","b","b","b","b","b"]
