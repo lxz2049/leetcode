@@ -1,6 +1,7 @@
 #!/bin/bash
 TMPDIR=$(mktemp -d)
 trap "rm -rf $TMPDIR" EXIT
+trap "rm *pyc" EXIT
 
 iconv -f utf-8 -t ascii//TRANSLIT < $1 > $TMPDIR/$1
 
