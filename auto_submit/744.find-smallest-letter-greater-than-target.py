@@ -69,5 +69,5 @@ class Solution(object):
         :type target: str
         :rtype: str
         """
-        i = bisect.bisect_left(letters, chr(ord(target)+1))
+        i = bisect.bisect_right(letters, target)
         return letters[i % len(letters)]
