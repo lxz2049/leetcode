@@ -64,16 +64,17 @@
 class Solution {
 public:
     char nextGreatestLetter(vector<char>& letters, char target) {
-        char ans = 0;
-        int min_distance = 26;
-        for (int i=0; i<letters.size(); ++i) {
-            int distance = (letters[i] - target + 26) % 26;
-            if (distance > 0 && distance < min_distance) {
-                min_distance = distance;
-                ans = letters[i];
-            }
-        }       
-        return ans;
+        int lo = 0;
+        int hi = letters.size();
+        while (lo < hi) {
+            int mid = lo + (hi-lo) / 2;
+            //cout<<lo<<" "<<hi<<" "<<letters[mid]<<endl;
+            if (letters[mid] <= target)
+                lo = mid + 1;
+            else
+                hi = mid;
+        }
+        return letters[lo%letters.size()];
     }
 
     void test() {
@@ -82,5 +83,6 @@ public:
         char ans = nextGreatestLetter(letters, 'g'); cout<<ans<<endl;
         ans = nextGreatestLetter(letters, 'j'); cout<<ans<<endl;
         ans = nextGreatestLetter(letters, 'k'); cout<<ans<<endl;
+        ans = nextGreatestLetter(letters, 'c'); cout<<ans<<endl;
     }
 };
