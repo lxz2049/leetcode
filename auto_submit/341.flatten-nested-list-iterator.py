@@ -70,29 +70,38 @@ class NestedIterator(object):
         Initialize your data structure here.
         :type nestedList: List[NestedInteger]
         """
-        def traverse(nestedInteger):
-            for e in nestedInteger:
-                if e.isInteger():
-                    yield e.getInteger()
-                else:
-                    for e in traverse(e.getList()):
-                        yield e
-        self.flatlist = [i for i in traverse(nestedList)]
-        self.i = 0
+        self.stack = [[nestedList, 0]]
 
     def next(self):
         """
         :rtype: int
         """
-        self.i += 1
-        return self.flatlist[self.i-1]
+        if self.hasNext():
+            # the top of the stack contains the next integer
+            nestedList, index = self.stack[-1]
+            val = nestedList[index]
+            self.stack[-1][1] += 1
+            return val
         
-
     def hasNext(self):
         """
         :rtype: bool
         """
-        return self.i < len(self.flatlist)
+        # keep looping until top of stack is an integer
+        while self.stack:
+            nestedList, index = self.stack[-1]
+
+            if index == len(nestedList):
+                self.stack.pop()
+                continue
+            elif nestedList[index].isInteger():
+                break
+            else:
+                self.stack[-1][1] += 1
+                self.stack.append([nestedList[index].getList(), 0])
+
+        # return True if stack is non-empty
+        return len(self.stack) > 0
         
 
 # Your NestedIterator object will be instantiated and called as such:
