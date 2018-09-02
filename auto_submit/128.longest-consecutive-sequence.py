@@ -30,6 +30,20 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        nums.sort()
+        running_size = 1
+        ans = 1 if nums else 0
+        for i in xrange(1, len(nums)):
+            if nums[i] == nums[i-1]:
+                continue
+            if nums[i] == nums[i-1] + 1:
+                running_size += 1
+            else:
+                running_size = 1
+            ans = max(ans, running_size)
+               
+        return ans
+        
         self.max_size = 1 if nums else 0
         def find(x):
             if x in tree:
