@@ -73,6 +73,7 @@ public:
     int find_parent(int a) {
         int parent = disjointSet[a].first;
         while (a != parent) {
+            disjointSet[a].first = disjointSet[parent].first;
             a = parent;
             parent = disjointSet[a].first;
         }
