@@ -95,7 +95,13 @@ public:
         //cout<<"a "<<a<<" parent_a "<<parent_a<<endl;
         //cout<<"b "<<b<<" parent_b "<<parent_b<<endl;
         if (parent_a != parent_b) {
-            disjointSet[parent_a].first = parent_b;
+            if (disjointSet[parent_a].second > disjointSet[parent_b].second) {
+                disjointSet[parent_b].first = parent_a;
+                disjointSet[parent_a].second += disjointSet[parent_b].second;
+            } else {
+                disjointSet[parent_a].first = parent_b;
+                disjointSet[parent_b].second += disjointSet[parent_a].second;
+            }
             return true;
         }
  
