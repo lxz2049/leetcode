@@ -12,8 +12,7 @@ public:
     int traverse(TreeNode* node, vector<pair<int, int>>& widths, int level, int index) {
         if (node) {
             if (level >= widths.size()) {
-                pair<int, int> p(index, index);
-                widths.push_back(p);
+                widths.push_back({index, index});
             }
             widths[level].first = min(widths[level].first, index);
             widths[level].second = max(widths[level].second, index);
