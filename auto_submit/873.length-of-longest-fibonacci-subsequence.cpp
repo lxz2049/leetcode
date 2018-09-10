@@ -64,6 +64,7 @@ class Solution {
 public:
     int lenLongestFibSubseq(vector<int>& nums) {
         vector<vector<int>> dp(nums.size(), vector<int>(nums.size(), 0));
+        vector<int> seq(nums.size());
         unordered_map<int, int> m;
         for (int i=0; i<nums.size(); ++i)
             m[nums[i]] = i;
@@ -74,16 +75,18 @@ public:
                 if (!dp[i][j]) {
                     int prev = nums[i];
                     int cur = nums[j];
-                    vector<int> seq = {i, j};
+                    seq[0] = i;
+                    seq[1] = j;
+                    int len = 2;
                     while (m.find(prev+cur) != m.end()) {
-                        seq.push_back(m[prev+cur]);
+                        seq[len++] = m[prev+cur];
                         cur = prev + cur;
                         prev = cur - prev;
                     }
-                    for (int k=0; k<seq.size()-1; ++k) {
-                        dp[seq[k]][seq[k+1]] = seq.size();
+                    for (int k=0; k<len-1; ++k) {
+                        dp[seq[k]][seq[k+1]] = len;
                     }
-                    maxSeqLen = max(maxSeqLen, int(seq.size()));
+                    maxSeqLen = max(maxSeqLen, len);
                 }
             }
         }
