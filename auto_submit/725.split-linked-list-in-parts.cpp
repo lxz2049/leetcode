@@ -77,24 +77,20 @@ public:
     vector<ListNode*> splitListToParts(ListNode* root, int k) {
         int len = 0;
         for (ListNode* node = root; node; node=node->next) len++;
-        int size = max(1, len / k);
-        int extra = max(0, len - k * size);
+        int size = len / k;
+        int extra = len % k;
         //cout<<size<<" "<<extra<<endl;
 
         vector<ListNode*> ret;
         for (int i=0; i<k; ++i) {
             ret.push_back(root);
             if (!root)  continue;
-            for (int j=1; j<size; ++j) {
+            for (int j=0; j < size + (i < extra ? 1: 0) - 1; ++j) {
                 root = root->next;
             }
-            if (extra) {
-                root = root->next;
-                extra--;
-            }
-            ListNode* tmp = root;
-            root = root->next;
-            tmp->next = NULL;
+            ListNode* tmp = root->next;
+            root->next = NULL;
+            root = tmp;
             //printList(ret[i]);
         }
         return ret;
