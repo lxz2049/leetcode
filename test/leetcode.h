@@ -58,6 +58,14 @@ ListNode* arr2list(int x[], int len) {
     return head;
 }
 
+void printList(ListNode* head) {
+    while (head) {
+        cout<<head->val<<" ";
+        head = head->next;
+        if (!head) cout<<endl;
+    }
+}
+
 
 struct Interval {
     int start;
