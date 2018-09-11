@@ -69,31 +69,16 @@ public:
                 tail = cur;
             }
         }
-        if (left) {
-            if (!head) {
-                head = tail = left;
-            } else {
-                tail->next = left;
-            }
-        }
-        if (right) {
-            if (!head) {
-                head = tail = right;
-            } else {
-                tail->next = right;
-            }
-        }
+        tail->next = left ? left : right;
         return head;
     }
 
     ListNode* sortList(ListNode* head) {
-        if (!head)
-            return NULL;
         //cout<<"sortList"<<endl; printList(head);
+        if (!head || !head->next)
+            return head;
         ListNode* mid = getMidList(head);
-        if (mid)
-            return mergeList(sortList(head), sortList(mid));
-        return head;
+        return mergeList(sortList(head), sortList(mid));
     }
 
     void test() {
