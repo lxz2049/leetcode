@@ -37,19 +37,15 @@ class Solution {
 public:
     ListNode* getMidList(ListNode* head) {
         //cout<<"getMidList"<<endl; printList(head);
-        ListNode* prev = NULL;
         ListNode* slow = head;
-        ListNode* fast = head;
+        ListNode* fast = head->next;
         while (fast && fast->next) {
-            prev = slow;
             slow = slow->next;
             fast = fast->next->next;
         }
-        if (prev) {
-            prev->next = NULL;
-            return slow;
-        }
-        return NULL;
+        ListNode* ret = slow->next;
+        slow->next = NULL;
+        return ret;
     }
 
     ListNode* mergeList(ListNode* left, ListNode* right) {
