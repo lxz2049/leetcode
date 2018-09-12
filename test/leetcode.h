@@ -66,6 +66,14 @@ void printList(ListNode* head) {
     }
 }
 
+void printVector(vector<int>& nums) {
+    for (int i=0; i<nums.size(); ++i) {
+        cout<<nums[i]<<" ";
+        if (i == nums.size() - 1)
+            cout<<endl;
+    }
+}
+
 
 struct Interval {
     int start;
