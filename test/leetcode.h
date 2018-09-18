@@ -20,18 +20,18 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-TreeNode* arr2treeUtil(int x[], int i, int len) {
-    if (i >= len || x[i] == -1)   return NULL;
-    TreeNode* node = new TreeNode(x[i]);
-    node->left = arr2treeUtil(x, i*2+1, len);
-    node->right = arr2treeUtil(x, i*2+2, len);
+TreeNode* arr2treeUtil(vector<int> arr, int i) {
+    if (i >= arr.size() || arr[i] == -1)   return NULL;
+    TreeNode* node = new TreeNode(arr[i]);
+    node->left = arr2treeUtil(arr, i*2+1);
+    node->right = arr2treeUtil(arr, i*2+2);
     return node;
 }
 
-TreeNode* arr2tree(int x[], int len) {
-    TreeNode* root = new TreeNode(x[0]);
-    root->left = arr2treeUtil(x, 1, len);
-    root->right = arr2treeUtil(x, 2, len);
+TreeNode* arr2tree(vector<int> arr) {
+    TreeNode* root = new TreeNode(arr[0]);
+    root->left = arr2treeUtil(arr, 1);
+    root->right = arr2treeUtil(arr, 2);
     return root;
 }
 
