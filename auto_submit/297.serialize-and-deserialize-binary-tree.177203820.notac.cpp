@@ -28,33 +28,26 @@ public:
         stack<TreeNode*> s;
         TreeNode *node = NULL, *dummy = new TreeNode(0);
         s.push(dummy);
-        int p;
-        for (int i=0; i<data.size(); i=p+1) {
+        for (int p, i=0; i<data.size(); i=p+1) {
             TreeNode* newNode = NULL;
             p = data.find(',', i);
             if (data[i] != '#') {
                 int num = atoi(data.substr(i, p).c_str());
                 newNode = new TreeNode(num);
             } 
+            if (!s.top()) {
+                s.pop();
+                node = s.top();
+            }
 
             if (node) {
                 node->right = newNode;
                 s.pop();
-                if (newNode) {
-                    s.push(newNode);
-                    node = NULL;
-                }
-                else {
-                    node = s.top();
-                }
+                s.push(newNode);
+                node = NULL;
             } else {
-                if (newNode) {
-                    s.top()->left = newNode;                   
-                    s.push(newNode);
-                }
-                else {
-                    node = s.top();
-                }
+                s.top()->left = newNode;                   
+                s.push(newNode);
             }
         }
         return dummy->left;
