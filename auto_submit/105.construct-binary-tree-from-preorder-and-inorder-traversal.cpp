@@ -45,29 +45,25 @@ public:
 		if (!preorder.size() || preorder.size() != inorder.size())
 			return NULL;
 
-		TreeNode* left = NULL;
-		TreeNode* right = NULL;
-		TreeNode* root = NULL;
+		TreeNode* root = new TreeNode(preorder[0]);
         stack<TreeNode*> s;
-		for (int i=0, j=0; i<preorder.size(); ++i) {
-			//printf("%d %d\n", i, j);
+        s.push(root);
+		TreeNode* node = NULL;
+		for (int i=1, j=0; i<preorder.size(); ++i) {
 			while (!s.empty() && s.top()->val == inorder[j]) {
-				right = s.top();
+				node = s.top();
 				s.pop();
 				j++;
 			}
-			TreeNode* newNode = new TreeNode(preorder[i]);
-			s.push(newNode);
-			if (!root)	root = newNode;
-			if (right) {
-				//printf("%d r %d\n", right->val, newNode->val);
-				right->right = newNode;
-				left = newNode;
-				right = NULL;
+			if (node) {
+                TreeNode* newNode = new TreeNode(preorder[i]);
+				node->right = newNode;
+                s.push(newNode);
+				node = NULL;
 			} else {
-				//printf("%d l %d\n", left?left->val:-1, newNode->val);
-				if (left)	left->left = newNode;
-				left = newNode;
+                TreeNode* newNode = new TreeNode(preorder[i]);
+				s.top()->left = newNode;
+                s.push(newNode);
 			}
 		}
 
