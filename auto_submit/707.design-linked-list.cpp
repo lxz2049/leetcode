@@ -103,7 +103,6 @@ public:
         n->next = new Node(val);
         n->next->next = next;
         len ++;
-        print();
     }
     
     /** Delete the index-th node in the linked list, if the index is valid. */
@@ -118,17 +117,6 @@ public:
         n->next = n->next->next;
         delete next;
         len --;
-        print();
-    }
-
-    void print() {
-        return;
-        Node *n = root->next;
-        while(n) {
-            cout<<n->val<<" ";
-            n = n->next;
-        }
-        cout<<endl;
     }
 };
 
