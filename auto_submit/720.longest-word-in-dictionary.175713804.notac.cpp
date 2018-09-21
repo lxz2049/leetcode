@@ -63,13 +63,15 @@ public:
         root->isWord = true;
     }
 
-    void traverse(TrieNode* node, string wip, string& ret) {
+    void traverse(TrieNode* node, string& wip, string& ret) {
         if (node && node->isWord) {
             if (wip.size() > ret.size())   ret = wip;
             else if (wip.size() == ret.size()) ret = min(ret, wip);
 
             for (int i=0; i< node->next.size(); ++i) {
-                traverse(node->next[i], wip + char(i + int('a')), ret);
+                wip.push_back(char(i + int('a')));
+                traverse(node->next[i], wip, ret);
+                wip.pop_back();
             }
         }
     }
@@ -82,7 +84,8 @@ public:
         }
 
         string ret = "";
-        traverse(root, "", ret);
+        string wip = "";
+        traverse(root, wip, ret);
         return ret;
     }
 
