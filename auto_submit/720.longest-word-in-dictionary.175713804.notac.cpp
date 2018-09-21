@@ -66,7 +66,6 @@ public:
     void traverse(TrieNode* node, string& wip, string& ret) {
         if (node && node->isWord) {
             if (wip.size() > ret.size())   ret = wip;
-            else if (wip.size() == ret.size()) ret = min(ret, wip);
 
             for (int i=0; i< node->next.size(); ++i) {
                 wip.push_back(char(i + int('a')));
