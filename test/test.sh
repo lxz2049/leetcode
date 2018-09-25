@@ -3,7 +3,7 @@ TMPDIR=$(mktemp -d)
 trap "rm -rf $TMPDIR" EXIT
 trap "rm -f *pyc" EXIT
 
-iconv -f utf-8 -t ascii//TRANSLIT < $1 > $TMPDIR/$1
+iconv -c -f ascii -t ascii < $1 > $TMPDIR/$1
 
 if [[ $TMPDIR/$1 =~ \.cpp$ ]]
 then
