@@ -47,7 +47,7 @@
  */
 class MagicDictionary {
 private:
-    map<string, string> s;
+    unordered_map<string, string> s;
 public:
     /** Initialize your data structure here. */
     MagicDictionary() {
