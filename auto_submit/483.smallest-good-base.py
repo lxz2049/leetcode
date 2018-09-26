@@ -62,7 +62,7 @@ class Solution(object):
 
         for bitCount in xrange(60, 1, -1):
             lo = 2
-            hi = int(n)-1
+            hi = n-1
             while lo <= hi:
                 mid = (lo + hi) / 2
                 m = calc(bitCount, mid)
@@ -72,7 +72,8 @@ class Solution(object):
                     lo = mid + 1
                 else:
                     hi = mid - 1
-        return -1
+
+        return "-1"
 
     def test(self):
         print self.smallestGoodBase(13)
