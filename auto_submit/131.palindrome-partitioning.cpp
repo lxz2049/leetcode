@@ -29,19 +29,13 @@
 class Solution {
 private:
     vector<vector<string>> ret;
-    vector<vector<int>> dp;
 public:
     bool isPalin(string& s, int st, int en) {
-        //cout<<s<<" "<<st<<" "<<en<<endl;
-        if (dp[st][en] > -1)    return dp[st][en];
         for (int i = 0; i < (en-st) / 2; ++i) {
             if (s[i+st] != s[en-1-i]) {
-                dp[st][en] = 0;
                 return false;
             }
         }
-        //cout<<s.substr(st, en-st)<<endl;
-        dp[st][en] = 1;
         return true;
     }
 
@@ -69,7 +63,6 @@ public:
 
     vector<vector<string>> partition(string s) {
         vector<int> p({0});
-        dp = vector<vector<int>>(s.size()+1, vector<int>(s.size()+1, -1));
         traverse(s, p, 0);
         return ret;
     }
