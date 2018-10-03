@@ -31,20 +31,19 @@ public:
         return s[i] == s[j] && (i == j-1 || dp[i+1][j-1] == 0);
     }
     int minCut(string s) {
-        vector<vector<int>> dp(s.size(), vector<int>(s.size(), 1));
-        dp[0][0] = 0;
-        for (int i=1; i<s.size(); ++i) {
+        vector<vector<int>> dp(s.size(), vector<int>(s.size(), 0));
+        for (int i=0; i<s.size(); ++i) {
             int mincut = s.size();
             for (int j=0; j<=i; ++j) {
                 if (isPalin(s, dp, j, i)) {
-                    //cout<<j<<i<<s.substr(j, i-j+1)<<endl;
                     dp[j][i] = 0;
-                    mincut = j == 0 ? 0: min(mincut, dp[0][j-1] + 1);
+                    mincut = j == 0 ? 0: min(mincut, dp[0][j-1] + 1);   // if j == 0 then no cut
+                } else {
+                    dp[j][i] = 1;
                 }
             }
             dp[0][i] = mincut;
         }
-        //for (int i=0; i<s.size(); ++i) {for (int j=0; j<s.size(); ++j) cout<<dp[i][j]<<" "; cout<<endl;}
         return dp[0][s.size()-1];
     }
     void test() {
