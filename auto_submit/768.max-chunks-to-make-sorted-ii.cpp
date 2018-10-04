@@ -55,15 +55,13 @@
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& arr) {
-        vector<int> maxarr(arr);
         vector<int> minarr(arr);
         for (int i=arr.size()-2; i>=0; --i) {
-            maxarr[i] = max(maxarr[i+1], maxarr[i]);
             minarr[i] = min(minarr[i+1], minarr[i]);
         }
 
         int ret = 1;
-        int amax = 0, amin = 0x7fffffff;
+        int amax = 0;
         for (int i=0; i<arr.size()-1; ++i) {
             amax = max(arr[i], amax);
             if (amax <= minarr[i+1]) {
