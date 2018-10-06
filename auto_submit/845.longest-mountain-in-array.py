@@ -68,10 +68,10 @@ class Solution(object):
         ret = mountain = 0
         for a in A[1:]:
             if a > prev:
+                mountain += 1
                 if state != 1:
                     state = 1
-                    mountain = 1
-                mountain += 1
+                    mountain = 2
             elif a < prev:
                 mountain += 1
                 if state == 1:
@@ -80,12 +80,11 @@ class Solution(object):
                     ret = max(ret, mountain)
                 else:
                     state = 0
-                    mountain = 0
+                    mountain = 1
             else:
-                state = 0
                 mountain = 0
+                state = 0
             prev = a
-            #print a, state, mountain
         return ret
 
     def test(self):
@@ -94,3 +93,4 @@ class Solution(object):
         print self.longestMountain([0,1,2,3,4,5,4,3,2,1,0])
         print self.longestMountain([0,2,1,5,4,3])
         print self.longestMountain([0,1,0])
+        print self.longestMountain([])
