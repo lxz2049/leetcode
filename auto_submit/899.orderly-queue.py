@@ -66,12 +66,7 @@ class Solution(object):
         """
         if K > 1:
             return "".join(sorted(S))
-        ret = S
-        for i in xrange(len(S)):
-            candidate = S[i+1:] + S[:i+1] 
-            if candidate < ret:
-                ret = candidate
-        return ret
+        return min(S[i:] + S[:i] for i in xrange(len(S)))
 
     def test(self):
         print self.orderlyQueue("adab", 1)
