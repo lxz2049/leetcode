@@ -42,27 +42,34 @@ class Solution(object):
         """
         def merge(nums):
             if len(nums) < 2:
-                return 0, nums
-            rank_left, nums_left = merge(nums[:len(nums)/2])
-            rank_right, nums_right = merge(nums[len(nums)/2:])
+                return 0
+            nums_left = nums[:len(nums)/2]
+            nums_right = nums[len(nums)/2:]
+            rank_left = merge(nums_left)
+            rank_right = merge(nums_right)
             rank = sum(len(nums_left) - bisect_right(nums_left, 2*n) for n in nums_right)
             i = left = right = 0
-            nums = [] 
             while left < len(nums_left) and right < len(nums_right):
                 if nums_left[left] < nums_right[right]:
-                    nums.append(nums_left[left])
+                    nums[i] = nums_left[left]
                     left += 1
+                    i += 1
                 else:
-                    nums.append(nums_right[right])
+                    nums[i] = nums_right[right]
                     right += 1
-            nums += nums_left[left:]
-            nums += nums_right[right:]
+                    i += 1
+            while left < len(nums_left):
+                nums[i] = nums_left[left]
+                left += 1
+                i += 1
+            while right < len(nums_right):
+                nums[i] = nums_right[right]
+                right += 1
+                i += 1
             rank += rank_left + rank_right
-            #print rank, nums_left, nums_right, nums
-            return rank, nums
+            return rank
 
-        rank, nums = merge(nums)
-        return rank
+        return merge(nums)
 
     def test(self):
         print self.reversePairs([1,3,2,3,1])
