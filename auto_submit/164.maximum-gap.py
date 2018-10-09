@@ -44,7 +44,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        nums = list(set(nums))
+        #nums = list(set(nums))
         if len(nums) < 2:
             return 0
 
