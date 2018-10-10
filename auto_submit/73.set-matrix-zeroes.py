@@ -64,23 +64,20 @@ class Solution(object):
         """
         if not matrix:
             return
-        zero_cur_row = any(e == 0 for e in matrix[0])
-        for i in xrange(len(matrix)):
-            zero_next_row = False
-            if i < len(matrix) - 1:
-                zero_next_row = any(e == 0 for e in matrix[i+1])
-                for j in xrange(len(matrix[i])):
-                    if matrix[i][j] == 0:
-                        matrix[i+1][j] = 0
-            else:
-                for j in xrange(len(matrix[i])):
-                    if matrix[i][j] == 0:
-                        for k in xrange(len(matrix)):
-                            matrix[k][j] = 0
-            if zero_cur_row:
-                for j in xrange(len(matrix[i])):
+        zero_first_row = any(e == 0 for e in matrix[0])
+        for i in xrange(1, len(matrix)):
+            zero_cur_row = any(e == 0 for e in matrix[i])
+            for j in xrange(len(matrix[i])):
+                if matrix[i][j] == 0:
+                    matrix[0][j] = 0
+                elif zero_cur_row:
                     matrix[i][j] = 0
-            zero_cur_row = zero_next_row
+        for j in xrange(len(matrix[0])):
+            if matrix[0][j] == 0:
+                for i in xrange(1, len(matrix)):
+                    matrix[i][j] = 0
+            elif zero_first_row:
+                matrix[0][j] = 0
             
     def test(self):
         m = [[1,1,1], [1,0,1], [1,1,1] ]
@@ -89,3 +86,7 @@ class Solution(object):
         m = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
         self.setZeroes(m)
         print m
+        m = [[0]]
+        self.setZeroes(m)
+        print m
+ 
