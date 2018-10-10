@@ -81,10 +81,11 @@ class Solution(object):
             if any(stickers[i] == stickers[i] & stickers[j] for j in range(len(stickers)) if i != j):
                 stickers.pop(i)
 
-        q = [(0, 0, target)]
+        q = deque([(0, 0, target)])
         visited = set()
         while q:
-            ret, length, missing = heapq.heappop(q)
+            #ret, length, missing = heapq.heappop(q)
+            ret, length, missing = q.pop()
             if not missing:
                 return ret
 
@@ -94,7 +95,8 @@ class Solution(object):
                     return ret + 1
                 elif key not in visited:
                     visited.add(key)
-                    heapq.heappush(q, (ret+1, len(key)+1, missing - s))
+                    #heapq.heappush(q, (ret+1, len(key)+1, missing - s))
+                    q.appendleft((ret+1, len(key)+1, missing - s))
 
         return -1
 
