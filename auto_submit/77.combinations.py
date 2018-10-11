@@ -41,12 +41,11 @@ class Solution(object):
                 ret.append(list(candidate))
                 return
             for i in xrange(s+1, n+1):
-                if i not in candidate:
-                    candidate.add(i)
-                    traverse(candidate, m+1, i)
-                    candidate.remove(i)
+                candidate.append(i)
+                traverse(candidate, m+1, i)
+                candidate.pop()
                     
-        traverse(set(), 0, 0)
+        traverse([], 0, 0)
         return ret
 
     def test(self):
