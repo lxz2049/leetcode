@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/split-array-largest-sum/description/
 #
 # algorithms
-# Hard (40.23%)
-# Total Accepted:    28.7K
-# Total Submissions: 71.5K
+# Hard (40.20%)
+# Total Accepted:    28.9K
+# Total Submissions: 71.8K
 # Testcase Example:  '[7,2,5,10,8]\n2'
 #
 # Given an array which consists of non-negative integers and an integer m, you
@@ -38,7 +38,6 @@
 # 
 # 
 #
-from collections import defaultdict
 class Solution(object):
     def splitArray(self, nums, m):
         """
@@ -46,20 +45,30 @@ class Solution(object):
         :type m: int
         :rtype: int
         """
-        presum = nums[:]
-        for i, n in enumerate(presum):
-            presum[i] += presum[i-1] if i else 0
-        subsum = lambda i, j: presum[j] - presum[i] + nums[i]
+        def solve(k):
+            rs = rm = 0
+            for n in nums:
+                if rs + n > k:
+                    rs = 0
+                    rm += 1
+                rs += n
+            rm += rs > 0
+            #print k, rm
+            return rm <= m
 
-        dp = defaultdict(int)
-        for i, n in enumerate(nums):
-            dp[i, 1] = subsum(0, i)
-            for j in xrange(2, min(i+2, m+1)):
-                dp[i, j] = min(max(dp[k, j-1], subsum(k+1, i)) for k in xrange(i))
-                #print "dp[%s, %s]" % (i, j), dp[i, j]
-        #print dp
-        return dp[len(nums)-1, m]
-
+        # bisect
+        lo = max(nums)
+        hi = sum(nums) + 1
+        while lo < hi:
+            #print lo, hi
+            mid = (lo + hi) / 2
+            if solve(mid):
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
+    
     def test(self):
         print self.splitArray([7,2,5,10,8], 2)
-        print self.splitArray([1, 2147483647], 2)
+            
+
