@@ -59,12 +59,11 @@ class Solution(object):
         if len(points) <= 2:
             return len(points)
 
-        def gcd(a, b):
-            if b == 0:
-                return a
-            return gcd(b, a%b)
-
         def gcdtuple(a, b):
+            def gcd(x, y):
+                if y == 0:
+                    return x
+                return gcd(y, x%y)
             g = gcd(a,b)
             return a/g, b/g
 
@@ -74,32 +73,22 @@ class Solution(object):
             for j in xrange(i+1, len(points)):
                 x1, y1 = points[i].x, points[i].y
                 x2, y2 = points[j].x, points[j].y
-                #x1, y1 = points[i]
-                #x2, y2 = points[j]
                 if (x1 != x2):
                     tan, b = gcdtuple(y2 - y1 ,x2 - x1), gcdtuple(y1*x2 - y2*x1, x2 - x1)
-                    key = (tan, 0, b)
-                    #print x1, y1, x2, y2, key
-                    lines[key].add(i)
-                    lines[key].add(j)
-                    ret = max(len(lines[key]), ret)
-                elif (y1 != y2):
-                    tan, b = gcdtuple(x2 - x1, y2 - y1), gcdtuple(x1*y2 - x2*y1, y2 - y1)
-                    key = (tan, b, 0)
-                    #print x1, y1, x2, y2, key
+                    key = (tan, b)
                     lines[key].add(i)
                     lines[key].add(j)
                     ret = max(len(lines[key]), ret)
                 else:
-                    key = (x1, y1)
+                    key = x1
                     lines[key].add(i)
                     lines[key].add(j)
                     ret = max(len(lines[key]), ret)
 
-        #print lines
         return ret
 
     def test(self):
+        print self.maxPoints([[1,1],[2,2],[0,0]])
         print self.maxPoints([[1,1],[2,2],[0,0]])
         print self.maxPoints([[1,1],[0,0],[0,0]])
         print self.maxPoints([[0,0],[0,0],[0,0]])
