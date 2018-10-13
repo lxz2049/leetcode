@@ -52,17 +52,14 @@ class Solution(object):
         :rtype: List[Interval]
         """
         i = next((i for i, interval in enumerate(intervals) 
-                 if interval.start >= newInterval.start), len(intervals))
-        if i > 0 and intervals[i-1].end >= newInterval.start:
-            i -= 1
+                 if interval.end >= newInterval.start), len(intervals))
         j = next((i for i, interval in enumerate(intervals) 
                  if interval.start > newInterval.end), len(intervals))
-        newStart = min(newInterval.start, 
-                       intervals[i].start if i < len(intervals) else 0xffffffff)
-        newEnd = max(newInterval.end, 
-                     intervals[j-1].end if j > 0 else 0)
-        #print i, j, newStart, newEnd
-        intervals = intervals[:i] + [Interval(newStart, newEnd)] + intervals[j:]
+        if i < len(intervals) and intervals[i].start < newInterval.start:
+            newInterval.start = intervals[i].start
+        if j > 0 and intervals[j-1].end > newInterval.end:
+            newInterval.end = intervals[j-1].end
+        intervals = intervals[:i] + [newInterval] + intervals[j:]
         return intervals
         
     def test(self):
