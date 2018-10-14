@@ -35,7 +35,7 @@
 # 
 # 
 #
-from collections import Counter
+from collections import defaultdict, Counter
 class Solution(object):
     def topKFrequent(self, nums, k):
         """
@@ -43,4 +43,14 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        return [t[0] for t in Counter(nums).most_common(k)]
+        counter = defaultdict(list)
+        for key, value in Counter(nums).iteritems():
+            counter[value].append(key)
+        ret = []
+        for i in xrange(len(nums), 0, -1):
+            if i in counter:
+                ret.extend(counter[i])
+        return ret[:k]
+
+    def test(self):
+        print self.topKFrequent([1],1)
