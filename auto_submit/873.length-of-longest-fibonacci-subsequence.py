@@ -70,16 +70,21 @@ class Solution(object):
         s = set(A)
         ret = 0
         for i in xrange(len(A)-2):
+            if len(A) - 1 - i + 1 <= ret:
+                break
             for j in xrange(i+1, len(A)):
+                if len(A) - 1 - j <= ret:
+                    break
                 prev, cur = A[i], A[j]
-                l = 2
+                l = 0
                 while prev + cur in s:
                     prev, cur = cur, prev + cur
                     l += 1
                 ret = max(ret, l)
                 
-        return ret if ret > 2 else 0
+        return ret + 2 if ret else 0
 
     def test(self):
         print self.lenLongestFibSubseq([1,2,3,4,5,6,7,8])
         print self.lenLongestFibSubseq([1,3,7,11,12,14,18])
+        print self.lenLongestFibSubseq([1,3])
