@@ -48,6 +48,8 @@ class Solution(object):
             counter[value].append(key)
         ret = []
         for i in xrange(len(nums), 0, -1):
+            if len(ret) >= k:
+                break
             if i in counter:
                 ret.extend(counter[i])
         return ret[:k]
