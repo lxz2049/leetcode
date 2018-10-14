@@ -4,9 +4,9 @@
  * https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/description/
  *
  * algorithms
- * Medium (41.04%)
- * Total Accepted:    5.2K
- * Total Submissions: 12.7K
+ * Medium (42.20%)
+ * Total Accepted:    6.8K
+ * Total Submissions: 16K
  * Testcase Example:  '[1,2,3,4,5,6,7,8]'
  *
  * A sequence X_1, X_2, ..., X_n is fibonacci-like if:
@@ -59,37 +59,41 @@
  * (The time limit has been reduced by 50% for submissions in Java, C, and
  * C++.)
  * 
+ * 
  */
 class Solution {
 public:
-    int lenLongestFibSubseq(vector<int>& nums) {
-        vector<vector<int>> dp(nums.size(), vector<int>(nums.size(), 0));
-        vector<int> seq(nums.size());
-        unordered_map<int, int> m;
-        for (int i=0; i<nums.size(); ++i)
-            m[nums[i]] = i;
-
-        int maxSeqLen = 0;
-        for (int i=0; i<nums.size(); ++i) {
-            for (int j=i+1; j<nums.size(); ++j) {
-                if (!dp[i][j]) {
-                    int prev = nums[i];
-                    int cur = nums[j];
-                    seq[0] = i;
-                    seq[1] = j;
-                    int len = 2;
-                    while (m.find(prev+cur) != m.end()) {
-                        seq[len++] = m[prev+cur];
-                        cur = prev + cur;
-                        prev = cur - prev;
-                    }
-                    for (int k=0; k<len-1; ++k) {
-                        dp[seq[k]][seq[k+1]] = len;
-                    }
-                    maxSeqLen = max(maxSeqLen, len);
+    int lenLongestFibSubseq(vector<int>& A) {
+        int ret = 0;
+        unordered_set<int> s(A.begin(), A.end());
+        for (int i=0; i<A.size()-2; ++i) {
+            if (A.size()-1-i+1 <= ret)
+                break;
+            for (int j=i+1; j<A.size()-1; ++j) {
+                if (A.size()-1-j <= ret)
+                    break;
+                int prev = A[i];
+                int cur = A[j];
+                int len = 0;
+                while (s.find(prev + cur) != s.end()) {
+                    int tmp = prev + cur;
+                    prev = cur;
+                    cur = tmp;
+                    len ++;
                 }
+                ret = max(len, ret);
             }
         }
-        return maxSeqLen > 2 ? maxSeqLen: 0;
+
+        return ret > 0 ? ret + 2 : 0;
+    }
+
+    void test() {
+        vector<int> v = {1,2,3,4,5,6,7,8};
+        cout<<lenLongestFibSubseq(v)<<endl;
+        vector<int> v1 = {1,3,7,11,12,14,18};
+        cout<<lenLongestFibSubseq(v1)<<endl;
+        vector<int> v2 = {1,3};
+        cout<<lenLongestFibSubseq(v2)<<endl;
     }
 };
