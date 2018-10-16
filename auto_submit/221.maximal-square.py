@@ -33,31 +33,18 @@ class Solution(object):
         """
         if not matrix:
             return 0
-        
-        hori = [[int(x) for x in m] for m in matrix]
-        vert = [[int(x) for x in m] for m in matrix]
-        matrix = [[int(x) for x in m] for m in matrix]
-        ret = matrix[0][0]
-        for i in xrange(len(hori)):
-            for j in xrange(1, len(hori[0])):
-                if hori[i][j]:
-                    ret = 1
-                    hori[i][j] += hori[i][j-1]
 
-        for i in xrange(1, len(vert)):
-            for j in xrange(len(vert[0])):
-                if vert[i][j]:
-                    ret = 1
-                    vert[i][j] += vert[i-1][j]
-
-        for i in xrange(1, len(matrix)):
-            for j in xrange(1, len(matrix[0])):
-                matrix[i][j] = min(hori[i][j], vert[i][j], matrix[i-1][j-1]+1)
-                ret = max(ret, matrix[i][j] * matrix[i][j])
+        ret = 0
+        for i in xrange(len(matrix)):
+            for j in xrange(len(matrix[0])):
+                if matrix[i][j] == "1":
+                    matrix[i][j] = min(matrix[i-1][j] if i else 0
+                            , matrix[i][j-1] if j else 0,
+                            matrix[i-1][j-1] if i and j else 0) + 1
+                    ret = max(ret, matrix[i][j] * matrix[i][j])
+                else:
+                    matrix[i][j] = 0
                 
-        #print hori
-        #print vert
-        #print matrix
         return ret
 
     def test(self):
