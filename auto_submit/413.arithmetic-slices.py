@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/arithmetic-slices/description/
 #
 # algorithms
-# Medium (54.72%)
-# Total Accepted:    35K
-# Total Submissions: 63.9K
+# Medium (54.43%)
+# Total Accepted:    49.4K
+# Total Submissions: 90.8K
 # Testcase Example:  '[1,2,3,4]'
 #
 # A sequence of number is called arithmetic if it consists of at least three
@@ -45,23 +45,17 @@ class Solution(object):
         :type A: List[int]
         :rtype: int
         """
-        if len(A) < 3:
-            return 0
-
-        it = iter(A)
-        c0 = it.next()
-        c1 = it.next()
-        count = 0
-        scount = 0
-        for c in it:
-            if c - c1 == c1 - c0:
-                scount, count = scount + 1, count + scount + 1
+        prev = cur = None
+        seqlen = 0
+        ret = 0
+        for a in A:
+            if prev is not None and cur is not None and a - cur == cur - prev:
+                seqlen += 1
+                ret += seqlen
             else:
-                scount = 0
-            #print c0, c1, c, scount
-            c0, c1 = c1, c
-        return count
+                seqlen = 0
+            prev, cur = cur, a
+        return ret
 
     def test(self):
-        print self.numberOfArithmeticSlices([1, 2, 3, 4])
-        print self.numberOfArithmeticSlices([1, 2, 3, 4, 5, 6])
+        print self.numberOfArithmeticSlices([1,2,3,4])
