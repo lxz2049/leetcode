@@ -50,16 +50,22 @@ class Solution(object):
         :type s2: str
         :rtype: int
         """
-        dp = [[0] * (len(s2)+1) for _ in xrange(len(s1)+1)]
-        for i, c1 in enumerate(s1):
-            dp[i][-1] = dp[i-1][-1] + ord(c1)
-        for j, c2 in enumerate(s2):
-            dp[-1][j] = dp[-1][j-1] + ord(c2)
-        for i, c1 in enumerate(s1):
-            for j, c2 in enumerate(s2):
-                 dp[i][j] = min(dp[i-1][j] + ord(c1), dp[i][j-1] + ord(c2), 
-                         dp[i-1][j-1] if c1 == c2 else 0x7fffffff)
-        return dp[-2][-2]
+        dp = [[-1] * (len(s2)+1) for _ in xrange(len(s1)+1)]
+        def traverse(i, j):
+            if dp[i][j] < 0:
+                if i == len(s1) and j == len(s2):
+                    dp[i][j] = 0
+                elif i == len(s1):
+                    dp[i][j] = ord(s2[j]) + traverse(i, j+1)
+                elif j == len(s2):
+                    dp[i][j] = ord(s1[i]) + traverse(i+1, j)
+                else:
+                    dp[i][j] = min(ord(s1[i]) + traverse(i+1, j),
+                                   ord(s2[j]) + traverse(i, j+1),
+                                   traverse(i+1, j+1) if s1[i] == s2[j] else 0x7fffffff)
+            return dp[i][j]
+        ret = traverse(0, 0)
+        return ret
 
     def test(self):
         print self.minimumDeleteSum('sea', 'eat')
