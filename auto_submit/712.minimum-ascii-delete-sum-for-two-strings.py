@@ -59,10 +59,11 @@ class Solution(object):
                     dp[i][j] = ord(s2[j]) + traverse(i, j+1)
                 elif j == len(s2):
                     dp[i][j] = ord(s1[i]) + traverse(i+1, j)
+                elif s1[i] == s2[j]:
+                    dp[i][j] = traverse(i+1, j+1) 
                 else:
                     dp[i][j] = min(ord(s1[i]) + traverse(i+1, j),
-                                   ord(s2[j]) + traverse(i, j+1),
-                                   traverse(i+1, j+1) if s1[i] == s2[j] else 0x7fffffff)
+                                   ord(s2[j]) + traverse(i, j+1))
             return dp[i][j]
         ret = traverse(0, 0)
         return ret
