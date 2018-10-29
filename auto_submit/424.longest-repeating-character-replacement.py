@@ -56,16 +56,14 @@ class Solution(object):
         :rtype: int
         """
         counter = Counter()
-        ret = i = c = 0
+        ret = i = maxcount = 0
         for j, c in enumerate(s):
             counter[c] += 1
-            length = j - i + 1
-            while length - counter[counter.most_common(1)[0][0]] > k:
+            maxcount = max(maxcount, counter[c])
+            if j - i + 1 - maxcount > k:
                 counter[s[i]] -= 1
                 i += 1
-                length -= 1
-            ret = max(length, ret)
-            #print s[i:j+1]
+            ret = max(ret, j - i + 1)
         return ret
 
     def test(self):
