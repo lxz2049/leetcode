@@ -33,6 +33,8 @@ class Solution(object):
         :rtype: int
         """
         for b in xrange(32):
+            if m & (0xffffffff << b) == 0:
+                return m
             mask = (1 << b)
             #print m & mask, (m & (0xffffffff << b)) + mask
             if m & mask and n >= (m & (0xffffffff << b)) + mask:
