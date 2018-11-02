@@ -67,37 +67,28 @@ class Solution(object):
         :rtype: bool
         """
         def satisfy(board, pp):
-            pattern = pp * 3
+            count = 0
             for i in xrange(3):
                 if board[i*3] == board[i*3 + 1] == board[i*3 + 2] == pp:
-                    return True
+                    count += 1
                 if board[i] == board[i + 3] == board[i + 6] == pp:
-                    return True
+                    count += 1
             if board[0] == board[4] == board[8] == pp:
-                return True
+                count += 1
             if board[2] == board[4] == board[6] == pp:
-                return True
-            return False
+                count += 1
+            return count
                     
         target = "".join(board)
-        target_count = len(target) - target.count(" ")
-        visited = set()
-        if target.count("X") >= target.count("O"):
-            q = deque([("         ", "X", "O", 0)])
-            while q:
-                board, p, pp, count = q.popleft()
-                #print board, p, pp
-                if board == target:
-                    return True
-                if count >= target_count or satisfy(board, pp):
-                    continue
-                for i, c in enumerate(board):
-                    if c == " ":
-                        n = board[:i] + p + board[i+1:]
-                        if n not in visited:
-                            q.append((n, pp, p, count + 1))
-                            visited.add(n)
-
+        cross_count = target.count("X")
+        circle_count = target.count("O")
+        cross_satisfy_count = satisfy(target, "X")
+        circle_satisfy_count = satisfy(target, "O")
+        #print cross_count, circle_count, cross_satisfy_count, circle_satisfy_count
+        if cross_count - circle_count == 0 and cross_satisfy_count == 0 and circle_satisfy_count <= 1:
+            return True
+        elif cross_count - circle_count == 1 and cross_satisfy_count <= 2 and circle_satisfy_count == 0:
+            return True
         return False
             
 
@@ -106,6 +97,5 @@ class Solution(object):
         print self.validTicTacToe(["XOX", " X ", "   "])
         print self.validTicTacToe(["XXX", "   ", "OOO"])
         print self.validTicTacToe(["XOX", "O O", "XOX"])
-        print self.validTicTacToe(["OXX", 
-                                   "XOX",
-                                   "OXO"])
+        print self.validTicTacToe(["OXX", "XOX", "OXO"])
+        print self.validTicTacToe(["XXX", "OOX", "OOX"])
