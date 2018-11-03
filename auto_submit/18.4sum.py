@@ -43,6 +43,8 @@ class Solution(object):
         for i in xrange(len(nums)):
             if i and nums[i] == nums[i-1]:
                 continue
+            if nums[i] * 4 > target:
+                break
             for j in xrange(i+1, len(nums)):
                 if j > i+1 and nums[j] == nums[j-1]:
                     continue
