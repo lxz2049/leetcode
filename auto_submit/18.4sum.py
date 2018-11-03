@@ -51,6 +51,8 @@ class Solution(object):
                 lo = j+1
                 hi = len(nums) - 1
                 while lo < hi:
+                    if nums[hi] * 4 < target:
+                        break
                     four = [nums[i], nums[j], nums[lo], nums[hi]]
                     fourSum = sum(four)
                     if fourSum == target:
