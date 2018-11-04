@@ -43,18 +43,17 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        dp = [None] * len(nums)
-        def solve(i):
-            if i is None:
-                return 0
-            if dp[i] is not None:
-                return dp[i]
-            dp[i] = 0
-            dp[i] = 1 + solve(nums[i])
-            return dp[i]
-        return max(solve(i) for i, n in enumerate(nums))
+        ret = 0
+        visited = [False] * len(nums)
+        for i in xrange(len(nums)):
+            n, l = i, 0
+            while not visited[n]:
+                visited[n] = True
+                n = nums[n]
+                l += 1
+            ret = max(ret, l)
+        return ret
 
     def test(self):
         print self.arrayNesting([5,4,0,3,1,6,2])
-                
-                
+        print self.arrayNesting([1,2,3,4,0,5,6])
