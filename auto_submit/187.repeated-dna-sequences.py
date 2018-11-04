@@ -34,13 +34,20 @@ class Solution(object):
         """
         ret = []
         sequences = Counter()
-        for i in xrange(len(s)-9):
-            seq = s[i:i+10]
-            if sequences[seq] == 1:
-                ret.append(seq)
-            sequences[seq] += 1
+        dnaToSeq = {"A": 0, "C": 1, "G": 2, "T": 3}
+        seq = 0
+        mask = (1 << 20) - 1
+        for i, c in enumerate(s):
+            seq = (dnaToSeq[c] + (seq << 2)) & mask
+            if i >= 9:
+                #print s[i-9:i+1], seq
+                if sequences[seq] == 1:
+                    ret.append(s[i-9:i+1])
+                sequences[seq] += 1
         return ret
 
     def test(self):
         print self.findRepeatedDnaSequences("AAAAAAAAAAA")
         print self.findRepeatedDnaSequences("AAAAAAAAAAAA")
+        print self.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT")
+        print self.findRepeatedDnaSequences("AAAAAGGGGGAAAAAGGGGGGAAAAACCCCTTT")
