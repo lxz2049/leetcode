@@ -45,6 +45,4 @@ class Solution(object):
         :rtype: int
         """
         lookup = Counter(-a - b for a in A for b in B)
-        ret = sum(lookup[c + d] for c in C for d in D)
-        return ret
-                
+        return sum(lookup[c + d] for c in C for d in D)
