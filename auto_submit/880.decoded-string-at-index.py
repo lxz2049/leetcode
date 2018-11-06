@@ -87,12 +87,12 @@ class Solution(object):
                 size += 1
 
         for c in reversed(S):
-            K %= size
-            if K == 0 and c.isalpha():
-                return c
             if c.isdigit():
                 size /= int(c)
+                K %= size
             else:
+                if K % size == 0:
+                    return c
                 size -= 1
         
 
