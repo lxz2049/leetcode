@@ -45,13 +45,18 @@ class Solution(object):
         :type x: int
         :rtype: int
         """
-        s = str(x)
-        if s[0] == '-':
-            s = '-' + s[1:][::-1]
-        else:
-            s = s[::-1]
-        x = int(s)
-        if x > 0x7fffffff or x < -0x80000000:
+        def div_remainder(x):
+            d = int(x / 10.0)
+            r = x - d * 10
+            return d, r
+        ret = 0
+        while x != 0:
+            x, r = div_remainder(x)
+            ret = ret * 10 + r
+        if ret > 0x7fffffff or ret < -0x80000000:
             return 0
-        return x
-            
+        return ret
+
+    def test(self):
+        print self.reverse(123)
+        print self.reverse(-123)
