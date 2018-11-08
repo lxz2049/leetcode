@@ -53,8 +53,8 @@ class Solution(object):
         while x != 0:
             x, r = div_remainder(x)
             ret = ret * 10 + r
-        if ret > 0x7fffffff or ret < -0x80000000:
-            return 0
+            if ret > 0x7fffffff or ret < -0x80000000:
+                return 0
         return ret
 
     def test(self):
