@@ -37,7 +37,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        return [[nums[i] for i in xrange(n.bit_length()) if n & (1 << i)] for n in xrange(1<<len(nums))]
+        return [[nums[i] for i in xrange(len(nums)) if n & (1 << i)] for n in xrange(1<<len(nums))]
 
     def test(self):
         print self.subsets([1,2,3])
