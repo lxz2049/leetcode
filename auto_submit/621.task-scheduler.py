@@ -51,9 +51,9 @@ class Solution(object):
         """
         taskCounter = Counter(tasks)
         taskCountCounter = Counter(taskCounter[t] for t in taskCounter)
-        maxCount = max(taskCountCounter)
-        maxTaskCount = taskCountCounter[maxCount]
-        return max(len(tasks), (maxCount - 1) * (n + 1) + maxTaskCount)
+        maxTaskCount = max(taskCountCounter)
+        maxCountTaskCount = taskCountCounter[maxTaskCount]
+        return max(len(tasks), (maxTaskCount - 1) * (n + 1) + maxCountTaskCount)
 
     def test(self):
         print self.leastInterval(["A","A","A","B","B","B"], 2)
