@@ -36,10 +36,13 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        prev, cur = None, head
-        while cur:
-            n = cur.next
-            cur.next = prev
-            cur, prev = n, cur
-        return prev
+        def reverse(node):
+            if not node or not node.next:
+                return node, node
+            head, tail = reverse(node.next)
+            tail.next = node
+            node.next = None
+            return head, node
+
+        return reverse(head)[0]
 
