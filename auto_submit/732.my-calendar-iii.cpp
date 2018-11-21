@@ -4,18 +4,17 @@
  * https://leetcode.com/problems/my-calendar-iii/description/
  *
  * algorithms
- * Hard (50.07%)
- * Total Accepted:    6.8K
- * Total Submissions: 13.5K
+ * Hard (50.43%)
+ * Total Accepted:    8.4K
+ * Total Submissions: 16.5K
  * Testcase Example:  '["MyCalendarThree","book","book","book","book","book","book"]\n[[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]'
  *
- * 
  * Implement a MyCalendarThree class to store your events. A new event can
  * always be added.
  * 
- * Your class will have one method, book(int start, int end).  Formally, this
+ * Your class will have one method, book(int start, int end). Formally, this
  * represents a booking on the half open interval [start, end), the range of
- * real numbers x such that start .
+ * real numbers x such that start <= x < end.
  * 
  * A K-booking happens when K events have some non-empty intersection (ie.,
  * there is some time that is common to all K events.)
@@ -23,13 +22,11 @@
  * For each call to the method MyCalendar.book, return an integer K
  * representing the largest integer such that there exists a K-booking in the
  * calendar.
- * 
- * 
- * Your class will be called like this:
- * MyCalendarThree cal = new MyCalendarThree();
- * MyCalendarThree.book(start, end)
+ * Your class will be called like this: MyCalendarThree cal = new
+ * MyCalendarThree(); MyCalendarThree.book(start, end)
  * 
  * Example 1:
+ * 
  * 
  * MyCalendarThree();
  * MyCalendarThree.book(10, 20); // returns 1
@@ -50,41 +47,49 @@
  * 
  * 
  * 
+ * 
  * Note:
+ * 
+ * 
  * The number of calls to MyCalendarThree.book per test case will be at most
  * 400.
  * In calls to MyCalendarThree.book(start, end), start and end are integers in
  * the range [0, 10^9].
  * 
+ * 
+ * 
+ * 
  */
 class MyCalendarThree {
-public:
+private:
     map<int, int> calendar;
-    MyCalendarThree() { }
-
+public:
+    MyCalendarThree() {
+        calendar.clear();
+    }
+    
     int book(int start, int end) {
-        calendar[start]++;
-        calendar[end]--;
-        int ret = 0, overlap = 0;
-        for (map<int, int>::iterator it=calendar.begin(); it != calendar.end(); ++it) {
-            //cout<<it->first<<" "<<it->second<<endl;
-            overlap += it->second;
-            ret = max(ret, overlap);
+        calendar[start] ++;
+        calendar[end] --;
+        int k = 0, ret = 0;
+        for (map<int, int>::iterator it=calendar.begin(); it != calendar.end(); it++) {
+            k += it->second;
+            ret = max(ret, k);
         }
+        //test();
         return ret;
     }
-};
 
-
-class Solution {
-public:
     void test() {
-        MyCalendarThree calendar;
-        cout<<calendar.book(10, 20)<<endl;
-        cout<<calendar.book(50, 60)<<endl;
-        cout<<calendar.book(10, 40)<<endl;
-        cout<<calendar.book(5, 15)<<endl;
-        cout<<calendar.book(5, 10)<<endl;
-        cout<<calendar.book(25, 55)<<endl;
+        for (map<int, int>::iterator it=calendar.begin(); it != calendar.end(); it++) {
+            cout<<it->first<<" "<<it->second<<endl;
+        }
+        cout<<endl;
     }
 };
+
+/**
+ * Your MyCalendarThree object will be instantiated and called as such:
+ * MyCalendarThree obj = new MyCalendarThree();
+ * int param_1 = obj.book(start,end);
+ */
