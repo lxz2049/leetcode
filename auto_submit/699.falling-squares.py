@@ -94,7 +94,6 @@ class Solution(object):
                    bottom[0] + bottom[1] > rect[0]:
                        heights[i] = max(heights[i], heights[j] + rect[1])
             ret[i] = max(ret[i-1], heights[i])
-        print heights
         return ret
 
     def test(self):
