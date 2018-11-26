@@ -58,7 +58,7 @@ class Solution(object):
         self.ret = 0x7fffffff
         self.last = None
         def traverse(node):
-            if node:
+            if node and self.ret > 1:
                 traverse(node.left)
                 if self.last is not None:
                     self.ret = min(self.ret, node.val - self.last)
