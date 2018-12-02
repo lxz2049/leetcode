@@ -40,7 +40,6 @@ class Solution(object):
         :type primes: List[int]
         :rtype: int
         """
-        primes.sort()
         nexts = [0] * len(primes)
         ret = [1]
         for _ in xrange(1, n):
