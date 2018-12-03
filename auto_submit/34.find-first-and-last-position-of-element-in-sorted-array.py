@@ -39,6 +39,6 @@ class Solution(object):
         """
         lo = bisect.bisect_left(nums, target)
         if lo < len(nums) and nums[lo] == target:
-            hi = next((i for i in xrange(lo+1, len(nums)) if nums[i] != target), len(nums))
+            hi = bisect.bisect_right(nums, target)
             return [lo, hi-1]
         return [-1, -1]
