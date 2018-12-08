@@ -60,19 +60,16 @@ class Solution(object):
         ret = []
         def traverse(st, op, base, prev, cur, exp):
             #print exp, op, prev, cur
-            if st < len(num):
-                # no op
-                if cur != 0:
-                    traverse(st+1, op, base, prev, cur * 10 + int(num[st]) * base, exp + num[st])
-                # plus
-                traverse(st+1, add, 1, op(prev, cur), int(num[st]), exp + "+" + num[st])
-                # minus
-                traverse(st+1, sub, 1, op(prev, cur), int(num[st]), exp + "-" + num[st])
-                # multiply
-                traverse(st+1, op, cur, prev, cur * int(num[st]), exp + "*" + num[st])
-            else:
+            if st == len(num):
                 if op(prev, cur) == target:
                     ret.append(exp)
+                return
+            if cur != 0:
+                traverse(st+1, op, base, prev, cur * 10 + int(num[st]) * base, exp + num[st])
+            traverse(st+1, add, 1, op(prev, cur), int(num[st]), exp + "+" + num[st])
+            traverse(st+1, sub, 1, op(prev, cur), int(num[st]), exp + "-" + num[st])
+            traverse(st+1, op, cur, prev, cur * int(num[st]), exp + "*" + num[st])
+
         traverse(1, add, 1, 0, int(num[0]), num[0])
         return ret
 
