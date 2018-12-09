@@ -4,8 +4,8 @@
 # https://leetcode.com/problems/search-in-rotated-sorted-array/description/
 #
 # algorithms
-# Medium (32.10%)
-# Total Accepted:    326K
+# Medium (32.31%)
+# Total Accepted:    334.3K
 # Total Submissions: 1M
 # Testcase Example:  '[4,5,6,7,0,1,2]\n0'
 #
@@ -42,26 +42,21 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        lo, hi = 0, len(nums)
-        while lo < hi:
+        lo, hi = 0, len(nums) - 1
+        while lo <= hi:
             mid = lo + hi >> 1
-            if nums[mid] >= nums[0]:
+            if nums[mid] == target:
+                return mid
+            if nums[mid] < target <= nums[hi] or \
+                    nums[mid] > nums[hi] and (target < nums[lo] or target > nums[mid]):
                 lo = mid + 1
             else:
-                hi = mid
-        def find(lo, hi):
-            while lo <= hi:
-                mid = lo + hi >> 1
-                if nums[mid] == target:
-                    return mid
-                if nums[mid] < target:
-                    lo = mid + 1
-                else:
-                    hi = mid - 1
-            return -1
-        return max(find(0, lo-1), find(lo, len(nums)-1))
+                hi = mid - 1
+        return -1
 
     def test(self):
-        #print self.search([4,5,6,7,0,1,2], 0)
-        #print self.search([4,5,6,7,0,1,2], 3)
-        print self.search([3,1], 1)
+        for i in xrange(8): print self.search([4,5,6,7,0,1,2], i)
+        for i in xrange(4): print self.search([0, 1, 2, 3], i)
+        print self.search([5, 1, 2], 5)
+        print self.search([3, 5, 1], 5)
+
