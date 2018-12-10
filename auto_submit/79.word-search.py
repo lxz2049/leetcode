@@ -45,7 +45,7 @@ class Solution(object):
                 return True
             if i >= 0 and j >= 0 and i < len(board) and j < len(board[i]) and board[i][j] == word[0] and not visited[i][j]:
                 visited[i][j] = True
-                if any(traverse(i, j, word[1:]) for i, j in ((i+1, j), (i, j+1), (i-1, j), (i, j-1))):
+                if any(traverse(x, y, word[1:]) for x, y in ((i+1, j), (i, j+1), (i-1, j), (i, j-1))):
                     return True
                 visited[i][j] = False
             return False
