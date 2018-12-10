@@ -54,13 +54,14 @@ class Solution(object):
             if nums[lo] == nums[mid] == nums[hi]:
                 lo += 1
             elif nums[mid] < target <= nums[hi] or \
-               nums[mid] >= nums[lo] and (target < nums[lo] or target > nums[mid]):
+               target > nums[mid] >= nums[lo] or \
+               target < nums[lo] <= nums[mid]:
                 lo = mid + 1
             else:
                 hi = mid - 1
         return False
 
     def test(self):
-        #print self.search([2,5,6,0,0,1,2], 0)
-        #print self.search([2,5,6,0,0,1,2], 3)
+        print self.search([2,5,6,0,0,1,2], 0)
+        print self.search([2,5,6,0,0,1,2], 3)
         print self.search([5,1,3], 5)
