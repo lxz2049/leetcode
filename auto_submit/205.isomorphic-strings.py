@@ -47,13 +47,14 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        def util(s, t):
-            m = {}
-            for cs, ct in zip(s, t):
-                if cs not in m:
-                    m[cs] = ct
-                elif m[cs] != ct:
-                    return False
-            return True
-     
-        return util(t, s) and util(s, t)
+        m, mm = {}, {}
+        for cs, ct in zip(s, t):
+            if cs not in m:
+                m[cs] = ct
+            elif m[cs] != ct:
+                return False
+            if ct not in mm:
+                mm[ct] = cs
+            elif mm[ct] != cs:
+                return False
+        return True
