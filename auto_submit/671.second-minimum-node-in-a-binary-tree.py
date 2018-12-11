@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/
 #
 # algorithms
-# Easy (41.70%)
-# Total Accepted:    24K
-# Total Submissions: 57.4K
+# Easy (42.76%)
+# Total Accepted:    37.5K
+# Total Submissions: 87.7K
 # Testcase Example:  '[2,2,5,null,null,5,7]'
 #
 # 
@@ -53,11 +53,11 @@
 # 
 #
 # Definition for a binary tree node.
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
 class Solution(object):
     def findSecondMinimumValue(self, root):
@@ -65,21 +65,13 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if not root:
-            return -1
-        
-        smallest = root.val
+        self.ret = 0x7fffffff
         def traverse(node):
             if node:
-                l = filter(lambda x: x>smallest, (traverse(node.left), traverse(node.right), node.val))
-                ret = min(l) if l else smallest
-                #print l, ret
-                return ret
-        ans = traverse(root)
-        return ans if ans > smallest else -1
-
-    def test(self):
-        root = TreeNode(2)
-        root.left = TreeNode(2)
-        root.right = TreeNode(5)
-        print self.findSecondMinimumValue(root)
+                if self.ret > node.val > root.val:
+                    self.ret = node.val
+                traverse(node.left)
+                traverse(node.right)
+        traverse(root)
+        return self.ret if self.ret < 0x7fffffff else -1
+            
