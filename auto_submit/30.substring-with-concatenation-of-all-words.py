@@ -56,7 +56,7 @@ class Solution(object):
             for j in xrange((len(s)-i)/wsize):
                 w = s[i+j*wsize:i+(j+1)*wsize]
                 wordcount[w] -= 1
-                while wordcount[w] < 0 and lo <= j:
+                while wordcount[w] < 0:
                     wordcount[s[i+lo*wsize:i+(lo+1)*wsize]] += 1
                     lo += 1
                 if j - lo + 1 == ssize/wsize:
