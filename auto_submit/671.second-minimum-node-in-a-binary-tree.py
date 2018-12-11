@@ -70,8 +70,9 @@ class Solution(object):
             if node:
                 if self.ret > node.val > root.val:
                     self.ret = node.val
-                traverse(node.left)
-                traverse(node.right)
+                if node.val == root.val:
+                    traverse(node.left)
+                    traverse(node.right)
         traverse(root)
         return self.ret if self.ret < 0x7fffffff else -1
             
