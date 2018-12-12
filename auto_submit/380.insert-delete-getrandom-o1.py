@@ -56,7 +56,8 @@ class RandomizedSet(object):
         """
         Initialize your data structure here.
         """
-        self.set = set()
+        self.dict = {}
+        self.list = []
         
 
     def insert(self, val):
@@ -65,9 +66,10 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val in self.set:
+        if val in self.dict:
             return False
-        self.set.add(val)
+        self.dict[val] = len(self.list)
+        self.list.append(val)
         return True
         
 
@@ -77,9 +79,14 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val not in self.set:
+        if val not in self.dict:
             return False
-        self.set.remove(val)
+        i = self.dict[val]
+        last = self.list[-1]
+        self.dict[last] = i
+        self.list[i] = self.list[-1]
+        self.list.pop()
+        self.dict.pop(val)
         return True
         
 
@@ -88,7 +95,7 @@ class RandomizedSet(object):
         Get a random element from the set.
         :rtype: int
         """
-        return random.choice(list(self.set))
+        return random.choice(self.list)
         
 
 class Solution:
