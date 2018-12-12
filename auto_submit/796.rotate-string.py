@@ -40,17 +40,4 @@ class Solution(object):
         :type B: str
         :rtype: bool
         """
-        def test(start):
-            for i in xrange(len(A)):
-                if A[(i+start) % len(A)] != B[i]:
-                    return False
-            return True
-
-        if len(A) != len(B):
-            return False
-        if not A and not B:
-            return True
-        for i in xrange(len(A)):
-            if test(i):
-                return True
-        return False
+        return len(A) == len(B) and A in B + B
