@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
 #
 # algorithms
-# Medium (33.24%)
-# Total Accepted:    218.6K
-# Total Submissions: 652.2K
+# Medium (32.31%)
+# Total Accepted:    221.1K
+# Total Submissions: 656.3K
 # Testcase Example:  '[3,5,1,6,2,0,8,null,null,7,4]\n5\n1'
 #
 # Given a binary tree, find the lowest common ancestor (LCA) of two given nodes
@@ -68,16 +68,16 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        self.ret = None
         def traverse(node):
-            if node and self.ret is None:
-                this = node in (p, q)
+            if node:
+                if node in (p, q):
+                    return node
                 left = traverse(node.left)
                 right = traverse(node.right)
-                if sum((this, left, right)) == 2 and self.ret is None:
-                    self.ret = node
-                return left or right or this
+                if left and right:
+                    return node
+                return left or right
             return False
-        traverse(root)
-        return self.ret
+        return traverse(root)
 
+        
