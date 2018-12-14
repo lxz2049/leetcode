@@ -58,7 +58,8 @@ class Solution(object):
             if "." in s and isFloat:
                 i = s.find(".")
                 lo, hi = s[:i], s[i+1:]
-                return not lo and hi.isdigit() or not hi and lo.isdigit() or lo.isdigit() and hi.isdigit()
+                return lo.isdigit() and (not hi or hi.isdigit()) or \
+                       hi.isdigit() and (not lo or lo.isdigit())
             return s.isdigit()
         s = s.strip()
         if "e" in s:
