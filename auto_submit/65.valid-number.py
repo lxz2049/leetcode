@@ -52,9 +52,36 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        try:
-            float(s)
-            return True
-        except:
-            return False
+        def isNumber(s, isFloat):
+            if s and s[0] in ("+-"):
+                s = s[1:]
+            if "." in s and isFloat:
+                i = s.find(".")
+                lo, hi = s[:i], s[i+1:]
+                return not lo and hi.isdigit() or not hi and lo.isdigit() or lo.isdigit() and hi.isdigit()
+            return s.isdigit()
+        s = s.strip()
+        if "e" in s:
+            i = s.find("e")
+            return isNumber(s[:i], True) and isNumber(s[i+1:], False)
+        return isNumber(s, True)
 
+    def test(self):
+        print self.isNumber("0")
+        print self.isNumber(" 0.1 ")
+	print self.isNumber("abc")
+	print self.isNumber("1 a")
+	print self.isNumber("2e10")
+	print self.isNumber(" -90e3   ")
+	print self.isNumber(" 1e")
+	print self.isNumber("e3")
+	print self.isNumber(" 6e-1")
+	print self.isNumber(" 99e2.5 ")
+	print self.isNumber("53.5e93")
+	print self.isNumber(" --6 ")
+	print self.isNumber("-+3")
+	print self.isNumber("95a54e53")
+	print self.isNumber(".")
+	print self.isNumber(".3")
+	print self.isNumber("3.3")
+	print self.isNumber("0..")
