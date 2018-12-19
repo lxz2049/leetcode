@@ -69,10 +69,13 @@ class Solution(object):
         :rtype: int
         """
         intervals.sort(key=lambda i: (i.start, i.end))
-        last = None
+        try:
+            last = intervals[0].end
+        except:
+            return 0
         ret = 0
-        for i in intervals:
-            if last is not None and i.start < last:
+        for i in intervals[1:]:
+            if i.start < last:
                 ret += 1
                 last = min(i.end, last)
             else:
