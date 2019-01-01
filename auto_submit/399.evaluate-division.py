@@ -45,38 +45,55 @@ class Solution(object):
         :type queries: List[List[str]]
         :rtype: List[float]
         """
-        # create graph
-        m = defaultdict(dict)
-        for equation, val in zip(equations, values):
-            num, denom = equation
-            m[num][denom] = val
-            m[num][num] = m[denom][denom] = 1.0
-            m[denom][num] = 1.0 / val
+        parents = range(len(equations) * 2)
+        size = [1] * (len(equations) * 2)
+        ratio = [1.0] * (len(equations) * 2)
+        def find(a):
+            if a != parents[a]:
+                pp = parents[a]
+                parents[a] = find(pp)
+                ratio[a] *= ratio[pp]
+            return parents[a]
+        
+        def merge(a, b, r):
+            ra = find(a)
+            rb = find(b)
+            if ra == rb:
+                return
+            if size[ra] < size[rb]:
+                ra, rb = rb, ra
+                a, b = b, a
+                r = 1.0 / r
+            parents[rb] = ra
+            ratio[rb] = ratio[a] * r / ratio[b]
+            size[ra] += size[rb]
+
+        letters = {}
+        i = 0
+        for e, v in zip(equations, values):
+            a, b = e
+            if a not in letters:
+                letters[a] = i
+                i += 1
+            if b not in letters:
+                letters[b] = i
+                i += 1
+            merge(letters[a], letters[b], v)
 
         ret = []
-        visited = set()
-        def solve(num, denom, val):
-            #print num, denom, val, visited
-            for d in m[num]:
-                if d == denom:
-                    ret.append(val * m[num][d])
-                    return True
-                if d not in visited:
-                    visited.add(d)
-                    if solve(d, denom, val * m[num][d]):
-                        visited.remove(d)
-                        return True
-                    visited.remove(d)
-            return False
-
-        for num, denom in queries:
-            visited.add(num)
-            if not solve(num, denom, 1):
+        for a, b in queries:
+            if a not in letters or b not in letters:
                 ret.append(-1.0)
-            visited.remove(num)
+                continue
+            a = letters[a]
+            b = letters[b]
+            if find(a) != find(b):
+                ret.append(-1.0)
+            else:
+                ret.append(ratio[b] / ratio[a])
         return ret
 
     def test(self):
-        #print self.calcEquation([["a", "b"], ["b", "c"]], [2.0, 3.0], [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ])
-        print self.calcEquation([["x1","x2"],["x2","x3"],["x3","x4"],["x4","x5"]], [3.0,4.0,5.0,6.0], [["x1","x5"],["x5","x2"],["x2","x4"],["x2","x2"],["x2","x9"],["x9","x9"]])
+        print self.calcEquation([["a", "b"], ["b", "c"]], [2.0, 3.0], [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ])
+        #print self.calcEquation([["x1","x2"],["x2","x3"],["x3","x4"],["x4","x5"]], [3.0,4.0,5.0,6.0], [["x1","x5"],["x5","x2"],["x2","x4"],["x2","x2"],["x2","x9"],["x9","x9"]])
 
