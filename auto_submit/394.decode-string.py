@@ -45,17 +45,15 @@ class Solution(object):
             mul = 0
             while i < len(s):
                 if s[i] == "]":
-                    return ret, i+1
+                    return ret, i
                 if s[i].isdigit():
                     mul = mul * 10 + int(s[i])
-                    i += 1
-                    continue
-                if s[i] == "[":
+                elif s[i] == "[":
                     sub, i = decode(i+1)
                     ret.extend(mul * sub)
                     mul = 0
-                    continue
-                ret.append(s[i])
+                else:
+                    ret.append(s[i])
                 i += 1
             return ret
 
