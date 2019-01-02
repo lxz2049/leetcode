@@ -4,9 +4,9 @@
 # https://leetcode.com/problems/intersection-of-two-arrays/description/
 #
 # algorithms
-# Easy (49.30%)
-# Total Accepted:    157.5K
-# Total Submissions: 317.1K
+# Easy (50.11%)
+# Total Accepted:    181.7K
+# Total Submissions: 351.4K
 # Testcase Example:  '[1,2,2,1]\n[2,2]'
 #
 # Given two arrays, write a function to compute their intersection.
@@ -43,4 +43,18 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        return list(set(nums1) & set(nums2))
+        nums1.sort()
+        nums2.sort()
+        i = j = 0
+        ret = []
+        while i < len(nums1):
+            while j < len(nums2) and nums1[i] > nums2[j]:
+                j += 1
+            #print i, j
+            if j < len(nums2) and nums1[i] == nums2[j] and (not ret or nums1[i] != ret[-1]):
+                ret.append(nums1[i])
+            i += 1
+        return ret
+
+    def test(self):
+        print self.intersection([1,2], [1,1])
