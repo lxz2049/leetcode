@@ -67,5 +67,14 @@ class Solution(object):
                 if counter[uid] == 2:
                     ret.append(node)
                 return uid
-        traverse(root)
+        def deserialize(node):
+            if node:
+                encoding = str(node.val) + deserialize(node.left) + deserialize(node.right)
+                counter[encoding] += 1
+                if counter[encoding] == 2:
+                    ret.append(node)
+                return encoding
+            return "#"
+
+        deserialize(root)
         return ret
