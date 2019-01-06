@@ -45,14 +45,19 @@ class MonoQueue(object):
         self.q = deque([])
 
     def append(self, x):
-        self.q.append(x)
+        cnt = 1
+        while self.q and self.q[-1][0] < x:
+            cnt += self.q[-1][1]
+            self.q.pop()
+        self.q.append([x, cnt])
 
     def popleft(self):
-        self.q.popleft()
+        self.q[0][1] -= 1
+        if self.q[0][1] <= 0:
+            self.q.popleft()
 
     def getMax(self):
-        return max(self.q)
-        #return self.q[-1]
+        return self.q[0][0]
 
 
 class Solution(object):
@@ -68,6 +73,11 @@ class Solution(object):
             mq.append(n)
         for n in nums[k-1:]:
             mq.append(n)
+            #print mq.q
             ret.append(mq.getMax())
             mq.popleft()
         return ret
+
+    def test(self):
+        print self.maxSlidingWindow([1,3,-1,-3,5,3,6,7], 3)
+        print self.maxSlidingWindow([1,-1], 1)
