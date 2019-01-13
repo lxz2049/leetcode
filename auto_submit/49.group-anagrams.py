@@ -39,5 +39,5 @@ class Solution(object):
         """
         mapping = defaultdict(list)
         for s in strs:
-            mapping["".join(sorted(s))].append(s)
+            mapping[tuple(sorted(s))].append(s)
         return mapping.values()
