@@ -55,6 +55,7 @@ class Solution(object):
         if rem:
             ret.append(".")
             div_mapping = {}
+            rem *= 10
             while rem:
                 if rem in div_mapping:
                     i = div_mapping[rem]
@@ -63,10 +64,9 @@ class Solution(object):
                     break
                 else:
                     div_mapping[rem] = len(ret)
-                rem *= 10
                 num = rem / denominator
-                rem = rem % denominator
                 ret.append(str(num))
+                rem = 10 * (rem % denominator)
         return "".join(ret)
 
     def test(self):
