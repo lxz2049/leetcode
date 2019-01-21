@@ -34,7 +34,19 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        return list(permutations(nums))
+        ret = []
+        def traverse(candidates, perm):
+            if len(perm) == len(nums):
+                ret.append([nums[i] for i in perm])
+                return
+            for i in candidates:
+                candidates.remove(i)
+                traverse(candidates, perm + [i])
+                candidates.add(i)
+
+        traverse(set(range(len(nums))), [])
+            
+        return ret
 
     def test(self):
         print self.permute([1,2,3])
