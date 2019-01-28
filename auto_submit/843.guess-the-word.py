@@ -62,7 +62,7 @@
 #        :type word: str
 #        :rtype int
 #        """
-
+import random
 class Solution(object):
     def findSecretWord(self, wordlist, master):
         """
@@ -71,8 +71,8 @@ class Solution(object):
         :rtype: None
         """
         dist = lambda a, b: sum(ca == cb for ca, cb in zip(a, b))
-        wordlist = set(wordlist)
-        while wordlist:
-            word = wordlist.pop()
+        score = 0
+        while score < 6:
+            word = random.choice(wordlist)
             score = master.guess(word)
-            wordlist = set(w for w in wordlist if dist(w, word) == score)
+            wordlist = [w for w in wordlist if dist(w, word) == score]
