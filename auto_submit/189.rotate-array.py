@@ -51,4 +51,13 @@ class Solution(object):
         :rtype: None Do not return anything, modify nums in-place instead.
         """
         k %= len(nums)
-        nums[:] = nums[-k:] + nums[:-k]
+        # first
+        #nums[:] = nums[-k:] + nums[:-k]
+
+        # second
+        nums[:] = nums[::-1]
+        nums[:k] = nums[:k][::-1]
+        nums[k:] = nums[k:][::-1]
+        
+    def test(self):
+        self.rotate(range(19), 7)
