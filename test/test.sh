@@ -16,5 +16,9 @@ then
 fi
 if [[ $TMPDIR/$1 =~ \.py$ ]]
 then
-    python2.7 -c "import imp; imp.load_source('', '$TMPDIR/$1').Solution().test()"
+    echo "from typing import *
+    $(cat $TMPDIR/$1)" > $TMPDIR/$1.old
+    echo "$(cat $TMPDIR/$1.old)
+Solution().test()" > $TMPDIR/$1
+    python3 $TMPDIR/$1
 fi
