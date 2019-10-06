@@ -4,3 +4,4 @@
 # tmp files created by editors
 *~
 *swp
+__pycache__
