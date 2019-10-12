@@ -79,9 +79,8 @@
 from collections import defaultdict
 class Solution:
     def minDeletionSize(self, strings: List[str]) -> int:
-        dp = []
+        dp = [1] * len(strings[0])
         for k, col in enumerate(zip(*strings)):
-            dp.append(1)
             for j in range(k):
                 if all(strings[i][j] <= col[i] for i in range(len(strings))):
                     dp[k] = max(dp[k], dp[j] + 1)
